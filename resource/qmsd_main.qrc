@@ -10,7 +10,6 @@
         <file>Arrow-Up.png</file>
         <file>Symbol-Add.png</file>
         <file>Symbol-Restricted.png</file>
-        <file alias="task_ico">evolution-tasks.png</file>
     </qresource>
     <qresource prefix="/">
         <file>main.png</file>

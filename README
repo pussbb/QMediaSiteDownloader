@@ -1,2 +1,10 @@
 QMediaSiteDownloader
 parse whole site and download all media files
+
+lang files
+for Linux users if application couldn't get available languages
+create a symbol link to the run
+cd ./bin
+ln -s ../lang ./lang
+
+For Windows user copy folder lang to folder bin

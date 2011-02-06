@@ -19,11 +19,16 @@ TRANSLATIONS = ./lang/qmsd_ru.ts \
 
 
 SOURCES += main.cpp\
-        src/medisitedownloder.cpp
+        src/mediasitedownloder.cpp
 
-HEADERS  += headers/medisitedownloder.h
 
-FORMS    += ui/medisitedownloder.ui
+HEADERS  += headers/mediasitedownloder.h
+
+FORMS    += \
+    ui/mediasitedownloder.ui
 
 OTHER_FILES += \
     README
+
+RESOURCES += \
+    resource/qmsd_main.qrc

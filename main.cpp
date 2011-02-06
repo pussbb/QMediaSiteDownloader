@@ -1,10 +1,10 @@
 #include <QtGui/QApplication>
-#include "headers/medisitedownloder.h"
+#include "headers/mediasitedownloder.h"
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    MediSiteDownloder w;
+    MediaSiteDownloder w;
     w.show();
 
     return a.exec();

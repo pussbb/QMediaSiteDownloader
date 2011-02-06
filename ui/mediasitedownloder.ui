@@ -37,33 +37,6 @@
             <height>253</height>
            </size>
           </property>
-          <item>
-           <property name="text">
-            <string>efewfwefew \n fgdfgdf
-
-</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Новый элемент</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Новый элемент</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Новый элемент</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Новый элемент</string>
-           </property>
-          </item>
          </widget>
         </item>
         <item row="0" column="1">
@@ -74,14 +47,173 @@
             <height>253</height>
            </size>
           </property>
-          <widget class="QLineEdit" name="lineEdit">
+          <widget class="QGroupBox" name="scantype">
+           <property name="geometry">
+            <rect>
+             <x>8</x>
+             <y>82</y>
+             <width>215</width>
+             <height>80</height>
+            </rect>
+           </property>
+           <property name="title">
+            <string>Scan type</string>
+           </property>
+           <widget class="QRadioButton" name="scansite">
+            <property name="geometry">
+             <rect>
+              <x>14</x>
+              <y>18</y>
+              <width>189</width>
+              <height>21</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Whole site</string>
+            </property>
+           </widget>
+           <widget class="QRadioButton" name="scanurl">
+            <property name="geometry">
+             <rect>
+              <x>14</x>
+              <y>44</y>
+              <width>187</width>
+              <height>21</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Given url</string>
+            </property>
+           </widget>
+          </widget>
+          <widget class="QGroupBox" name="info">
+           <property name="geometry">
+            <rect>
+             <x>8</x>
+             <y>2</y>
+             <width>281</width>
+             <height>80</height>
+            </rect>
+           </property>
+           <property name="title">
+            <string>History</string>
+           </property>
+           <widget class="QLabel" name="label">
+            <property name="geometry">
+             <rect>
+              <x>8</x>
+              <y>16</y>
+              <width>65</width>
+              <height>16</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Added</string>
+            </property>
+           </widget>
+           <widget class="QLabel" name="date_added">
+            <property name="geometry">
+             <rect>
+              <x>54</x>
+              <y>16</y>
+              <width>91</width>
+              <height>16</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>                </string>
+            </property>
+           </widget>
+           <widget class="QLabel" name="label_2">
+            <property name="geometry">
+             <rect>
+              <x>8</x>
+              <y>36</y>
+              <width>173</width>
+              <height>16</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Amount of crawled pages</string>
+            </property>
+           </widget>
+           <widget class="QLabel" name="label_3">
+            <property name="geometry">
+             <rect>
+              <x>8</x>
+              <y>58</y>
+              <width>181</width>
+              <height>16</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Amount of Media downloaded</string>
+            </property>
+           </widget>
+           <widget class="QLabel" name="pages_crawled">
+            <property name="geometry">
+             <rect>
+              <x>188</x>
+              <y>34</y>
+              <width>81</width>
+              <height>16</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>                           </string>
+            </property>
+           </widget>
+           <widget class="QLabel" name="mediadowned">
+            <property name="geometry">
+             <rect>
+              <x>220</x>
+              <y>58</y>
+              <width>56</width>
+              <height>15</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>                      </string>
+            </property>
+           </widget>
+          </widget>
+          <widget class="QCheckBox" name="autostartdown">
            <property name="geometry">
             <rect>
              <x>12</x>
-             <y>8</y>
-             <width>113</width>
-             <height>21</height>
+             <y>176</y>
+             <width>283</width>
+             <height>20</height>
             </rect>
+           </property>
+           <property name="text">
+            <string>Automatically start download media</string>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="save_task_settings">
+           <property name="geometry">
+            <rect>
+             <x>30</x>
+             <y>214</y>
+             <width>78</width>
+             <height>25</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Save</string>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="startscan">
+           <property name="geometry">
+            <rect>
+             <x>130</x>
+             <y>214</y>
+             <width>78</width>
+             <height>25</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Start</string>
            </property>
           </widget>
          </widget>
@@ -127,7 +259,7 @@
     <bool>false</bool>
    </attribute>
    <addaction name="actionNew_Task"/>
-   <addaction name="actionTask_List"/>
+   <addaction name="actionRemove_Task"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionExit">
@@ -161,13 +293,13 @@
     <string>New Task</string>
    </property>
   </action>
-  <action name="actionTask_List">
+  <action name="actionRemove_Task">
    <property name="icon">
     <iconset resource="../resource/qmsd_main.qrc">
-     <normaloff>:/toolbar/task_ico</normaloff>:/toolbar/task_ico</iconset>
+     <normaloff>:/toolbar/Symbol-Restricted.png</normaloff>:/toolbar/Symbol-Restricted.png</iconset>
    </property>
    <property name="text">
-    <string>Task List</string>
+    <string>Remove Task</string>
    </property>
   </action>
  </widget>

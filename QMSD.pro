@@ -19,13 +19,16 @@ TRANSLATIONS = ./lang/qmsd_ru.ts \
 
 
 SOURCES += main.cpp\
-        src/mediasitedownloder.cpp
+        src/mediasitedownloder.cpp \
+    src/addtask.cpp
 
 
-HEADERS  += headers/mediasitedownloder.h
+HEADERS  += headers/mediasitedownloder.h \
+    headers/addtask.h
 
 FORMS    += \
-    ui/mediasitedownloder.ui
+    ui/mediasitedownloder.ui \
+    ui/addtask.ui
 
 OTHER_FILES += \
     README

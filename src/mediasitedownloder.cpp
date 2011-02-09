@@ -122,3 +122,9 @@ void MediaSiteDownloder::on_tasklist_customContextMenuRequested(QPoint pos)
         m->exec(ui->tasklist->mapToGlobal(pos));
     }
 }
+
+#include "headers/addtask.h"
+void MediaSiteDownloder::on_actionNew_Task_triggered()
+{
+
+}

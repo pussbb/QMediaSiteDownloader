@@ -38,6 +38,8 @@ private slots:
 
     void on_tasklist_customContextMenuRequested(QPoint pos);
 
+    void on_actionNew_Task_triggered();
+
 private:
     Ui::MediaSiteDownloder *ui;
 };

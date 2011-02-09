@@ -112,7 +112,7 @@
         <location filename="../src/mediasitedownloder.cpp" line="87"/>
         <location filename="../src/mediasitedownloder.cpp" line="99"/>
         <source>langmenu</source>
-        <translation></translation>
+        <translation type="unfinished">Языки</translation>
     </message>
     <message>
         <location filename="../src/mediasitedownloder.cpp" line="62"/>

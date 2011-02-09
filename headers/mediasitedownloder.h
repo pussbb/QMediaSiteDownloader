@@ -35,6 +35,9 @@ private slots:
     void createLanguageMenu();
     void on_actionAbout_QT_triggered();
 
+
+    void on_tasklist_customContextMenuRequested(QPoint pos);
+
 private:
     Ui::MediaSiteDownloder *ui;
 };

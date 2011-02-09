@@ -30,7 +30,7 @@
       <widget class="QWidget" name="index">
        <layout class="QGridLayout" name="gridLayout_2">
         <item row="0" column="0">
-         <widget class="QListWidget" name="listWidget">
+         <widget class="QListWidget" name="tasklist">
           <property name="minimumSize">
            <size>
             <width>167</width>

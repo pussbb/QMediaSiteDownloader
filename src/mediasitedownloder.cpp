@@ -109,3 +109,16 @@ void MediaSiteDownloder::changeEvent(QEvent *e)
         break;
     }
 }
+
+
+void MediaSiteDownloder::on_tasklist_customContextMenuRequested(QPoint pos)
+{
+    if(ui->tasklist->currentIndex().isValid() && ui->tasklist->currentItem()->isSelected()){
+        QMenu *m=new QMenu();
+        pos.setX(pos.x()-5);
+        pos.setY(pos.y()+25);
+        m->addAction(ui->actionRemove_Task);
+        //m->addAction(ui->actionEdit);
+        m->exec(ui->tasklist->mapToGlobal(pos));
+    }
+}

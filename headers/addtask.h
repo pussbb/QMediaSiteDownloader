@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include <QMap>
+#include <QAbstractButton>
 namespace Ui {
     class AddTask;
 }
@@ -17,8 +18,9 @@ public:
     QMap<QString, QString> map;
 private slots:
     void on_toolButton_clicked();
+    bool validateUrl(QString url);
 
-    void on_buttonBox_accepted();
+    void on_buttonBox_clicked(QAbstractButton* button);
 
 private:
     Ui::AddTask *ui;

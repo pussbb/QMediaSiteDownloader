@@ -25,7 +25,7 @@ void MediaSiteDownloder::init_app()
 {
     taskdb.setFolder(taskdir);
     QStringList fileNames =
-            dir.entryList(QStringList("*.task"));
+            dir.entryList(QStringList("*.project"));
     ///qDebug()<<fileNames;
 }
 

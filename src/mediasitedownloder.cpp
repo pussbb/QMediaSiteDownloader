@@ -1,5 +1,6 @@
 #include "headers/mediasitedownloder.h"
 #include "ui_mediasitedownloder.h"
+#define taskdir QDir::toNativeSeparators ( QApplication::applicationDirPath()+"/tasks/" )
 
 MediaSiteDownloder::MediaSiteDownloder(QWidget *parent) :
     QMainWindow(parent),
@@ -18,6 +19,14 @@ MediaSiteDownloder::MediaSiteDownloder(QWidget *parent) :
             action->menu()->addMenu(languageMenu);
         }
     }
+    init_app();
+}
+void MediaSiteDownloder::init_app()
+{
+    taskdb.setFolder(taskdir);
+    QStringList fileNames =
+            dir.entryList(QStringList("*.task"));
+    ///qDebug()<<fileNames;
 }
 
 MediaSiteDownloder::~MediaSiteDownloder()
@@ -124,7 +133,19 @@ void MediaSiteDownloder::on_tasklist_customContextMenuRequested(QPoint pos)
 }
 
 #include "headers/addtask.h"
+#include <QStandardItem>
 void MediaSiteDownloder::on_actionNew_Task_triggered()
 {
+    AddTask *task = new AddTask(this);
+    if(task->exec()== QDialog::Accepted)
+    {
+       QString dbname=QCryptographicHash::hash (task->map.value("taskname").toAscii(), QCryptographicHash::Md5 ).toHex();
+       taskdb.createTask(dbname);
+       QSettings taskset(taskdir+task->map.value("taskname")+".project",QSettings::NativeFormat);
+       taskset.setValue("dbname",dbname);
+       foreach (QString str, task->map.keys())
+           taskset.setValue(str,task->map.value(str));
+       taskdb.close();
+    }
 
 }

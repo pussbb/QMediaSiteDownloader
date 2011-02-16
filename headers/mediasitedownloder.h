@@ -8,6 +8,10 @@
 #include <QInputDialog>
 #include <QMessageBox>
 #include <QSettings>
+#include "headers/taskdb.h"
+///
+#include <QDebug>
+///
 
 namespace Ui {
     class MediaSiteDownloder;
@@ -21,6 +25,7 @@ public:
     explicit MediaSiteDownloder(QWidget *parent = 0);
     ~MediaSiteDownloder();
     QDir dir;
+    TaskDB taskdb;
     QTranslator translator;
     QMessageBox msgBox;
     QSettings settings;
@@ -30,6 +35,7 @@ protected:
     void changeEvent(QEvent *e);
 
 private slots:
+    void init_app();
     void on_actionExit_triggered();
     void switchLanguage(QAction *action);
     void createLanguageMenu();

@@ -2,7 +2,7 @@
 #define ADDTASK_H
 
 #include <QDialog>
-
+#include <QMap>
 namespace Ui {
     class AddTask;
 }
@@ -14,9 +14,11 @@ class AddTask : public QDialog
 public:
     explicit AddTask(QWidget *parent = 0);
     ~AddTask();
-
+    QMap<QString, QString> map;
 private slots:
     void on_toolButton_clicked();
+
+    void on_buttonBox_accepted();
 
 private:
     Ui::AddTask *ui;

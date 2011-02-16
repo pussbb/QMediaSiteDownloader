@@ -101,7 +101,7 @@
   <widget class="QLineEdit" name="pathtomedia">
    <property name="geometry">
     <rect>
-     <x>16</x>
+     <x>14</x>
      <y>116</y>
      <width>305</width>
      <height>21</height>

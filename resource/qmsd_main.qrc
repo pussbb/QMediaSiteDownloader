@@ -13,5 +13,6 @@
     </qresource>
     <qresource prefix="/">
         <file>main.png</file>
+        <file>task.sql</file>
     </qresource>
 </RCC>

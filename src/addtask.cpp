@@ -50,8 +50,8 @@ void AddTask::on_buttonBox_clicked(QAbstractButton* button)
          }
          else
             {
-                QMessageBox::warning(0,  QObject::tr("Erorr"),
-                                      QObject::tr("Please fill all fields."));
+                QMessageBox::warning(0,  tr("Erorr"),
+                                      tr("Please fill all fields."));
             }
         }
         else

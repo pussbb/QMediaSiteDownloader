@@ -1,9 +1,9 @@
 #include "headers/taskdb.h"
-
+#include "QApplication"
 TaskDB::TaskDB() :
     QObject()
 {
-
+        taskfolder=QDir::toNativeSeparators ( QApplication::applicationDirPath()+"/tasks/" ) ;
 }
 void TaskDB::setFolder(QString foldername)
 {
@@ -24,11 +24,13 @@ void TaskDB::setFolder(QString foldername)
         }
     }
     this->taskfolder=foldername;
+    emit dblog(foldername);
    // return true;
 }
 
 bool TaskDB::createTask(QString name)
 {
+
     QFile sqlres(":/task.sql");
     if (!sqlres.open(QIODevice::ReadOnly))
     {
@@ -52,4 +54,55 @@ bool TaskDB::createTask(QString name)
     for (int i = 0; i < querylist.size(); ++i)
             sql.exec(querylist.at(i));
     return true;
+}
+bool TaskDB::open(QString dbname)
+{
+    if(db.isOpen())
+            db.close();
+    db = QSqlDatabase::addDatabase("QSQLITE");
+    db.setDatabaseName(taskfolder+dbname+".task");
+    if (!db.open()) {
+        QMessageBox::critical(0, tr("Cannot open database"),
+                              tr("Cannot open database."), QMessageBox::Cancel);
+        return false;
+    }
+    return true;
+}
+bool TaskDB::page_exists(QString page)
+{
+    QSqlQuery sql("SELECT *  FROM pages WHERE url =\""+page+"\" ORDER BY rowid; ");
+    if(sql.next())
+    {
+        emit dblog("Given url was found in database");
+        page_parsed=0;
+        if(sql.value(2).toInt()!=0)
+            page_parsed=sql.value(2).toInt();
+        page_index=sql.value(2).toInt();
+        return true;
+    }
+    return false;
+}
+
+int TaskDB::add_page(QString page)
+{
+     QSqlQuery sql;
+     sql.exec("INSERT INTO pages(url ,parsed) VALUES(\""+page+"\",0);");
+     if(sql.lastError().isValid())
+        emit dblog(sql.lastError().text());
+     return sql.lastInsertId().toInt();
+}
+
+void TaskDB::add_media(QStringList list, int parent)
+{
+    QSqlQuery sql;
+
+    for (int i = 0; i < list.size(); ++i)
+    {
+            sql.exec("INSERT INTO media(from_page,url,downloaded) VALUES("+QString::number(parent)+",\""+list.at(i).toLocal8Bit()+"\",0);");
+            if(sql.lastError().isValid())
+                emit dblog(sql.lastError().text());
+            else{
+                emit dblog("Added "+QFileInfo(list.at(i).toLocal8Bit()).fileName());
+            }
+    }
 }

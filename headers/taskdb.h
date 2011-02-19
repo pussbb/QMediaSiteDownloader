@@ -15,9 +15,16 @@ public:
     QSqlDatabase db;
     void setFolder(QString foldername);
     bool createTask(QString name);
-    inline void close(){db.close();}
-signals:
+    inline void close(){db.close();};
 
+    int add_page(QString page);
+    void add_media(QStringList list,int parent);
+    bool open(QString dbname);
+    bool page_exists(QString page);
+    int page_index;
+    int page_parsed;
+signals:
+    void dblog(QString msg);
 private:
     QString taskfolder;
 public slots:

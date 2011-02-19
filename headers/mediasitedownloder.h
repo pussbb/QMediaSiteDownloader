@@ -8,6 +8,7 @@
 #include <QInputDialog>
 #include <QMessageBox>
 #include <QSettings>
+#include <QListWidgetItem>
 #include "headers/taskdb.h"
 ///
 #include <QDebug>
@@ -25,15 +26,17 @@ public:
     explicit MediaSiteDownloder(QWidget *parent = 0);
     ~MediaSiteDownloder();
     QDir dir;
-    TaskDB taskdb;
+    TaskDB *taskdb;
     QTranslator translator;
     QMessageBox msgBox;
     QSettings settings;
+
     QMenu *languageMenu;
 
 protected:
     void changeEvent(QEvent *e);
-
+public slots:
+    void  handleLogMessage(QString msg);
 private slots:
     void init_app();
     void on_actionExit_triggered();
@@ -45,6 +48,10 @@ private slots:
     void on_tasklist_customContextMenuRequested(QPoint pos);
 
     void on_actionNew_Task_triggered();
+
+    void on_tasklist_itemDoubleClicked(QListWidgetItem* item);
+
+    void on_startscan_clicked();
 
 private:
     Ui::MediaSiteDownloder *ui;

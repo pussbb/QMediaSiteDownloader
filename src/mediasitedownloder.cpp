@@ -7,6 +7,8 @@ MediaSiteDownloder::MediaSiteDownloder(QWidget *parent) :
     ui(new Ui::MediaSiteDownloder)
 {
     ui->setupUi(this);
+    taskdb = new TaskDB;
+    ///taskdb=new TaskDB();
     QMenuBar* bar=this->menuBar();
     QList<QAction *> actions = bar->actions();
     QList<QAction *>::const_iterator it = actions.begin();
@@ -19,14 +21,22 @@ MediaSiteDownloder::MediaSiteDownloder(QWidget *parent) :
             action->menu()->addMenu(languageMenu);
         }
     }
+    ///connect(taskdb,SIGNAL(dblog(QString)),this,SLOT(handleLogMessage(QString)));
+    taskdb->setFolder(taskdir);
     init_app();
 }
 void MediaSiteDownloder::init_app()
 {
-    taskdb.setFolder(taskdir);
+
+    dir.setPath(taskdir);
     QStringList fileNames =
             dir.entryList(QStringList("*.project"));
-    ///qDebug()<<fileNames;
+    ui->tasklist->clear();
+    foreach (QString name, fileNames) {
+        name.replace(".project","");
+        ui->tasklist->addItem(name);
+    }
+
 }
 
 MediaSiteDownloder::~MediaSiteDownloder()
@@ -140,12 +150,40 @@ void MediaSiteDownloder::on_actionNew_Task_triggered()
     if(task->exec()== QDialog::Accepted)
     {
        QString dbname=QCryptographicHash::hash (task->map.value("taskname").toAscii(), QCryptographicHash::Md5 ).toHex();
-       taskdb.createTask(dbname);
+       taskdb->createTask(dbname);
        QSettings taskset(taskdir+task->map.value("taskname")+".project",QSettings::NativeFormat);
        taskset.setValue("dbname",dbname);
        foreach (QString str, task->map.keys())
            taskset.setValue(str,task->map.value(str));
-       taskdb.close();
+       taskdb->close();
+       init_app();
     }
 
+}
+
+void MediaSiteDownloder::on_tasklist_itemDoubleClicked(QListWidgetItem* item)
+{
+    if(!item->text().isEmpty())
+    {
+           QSettings tasksettings(taskdir+item->text()+".project",QSettings::NativeFormat);
+           qDebug()<<tasksettings.fileName();
+            ui->task_url->setText(tasksettings.value("url","null").toString());
+    }
+}
+#include "headers/qparsesite.h"
+void MediaSiteDownloder::on_startscan_clicked()
+{
+    ui->index->hide();
+    ui->parse_info->show();
+   /// ui->log->clear();
+    QParseSite* site = new QParseSite(this,"b07e93a3f4c43389c8524c00d45900db");
+    connect(site,SIGNAL(dblog(QString)),this,SLOT(handleLogMessage(QString)));
+    site->parseSite("http://mfm.ua/top2010/");
+
+}
+void MediaSiteDownloder::handleLogMessage(QString msg)
+{
+
+    qDebug()<<taskdb->db.databaseName();
+    ui->log->addItem(QDateTime::currentDateTime ().toString()+"  "+msg);
 }

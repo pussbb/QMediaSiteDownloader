@@ -109,7 +109,7 @@ void QParseSite::parse_page(QString content)
 
 void QParseSite::parseSite(QString url = "")
 {
-    emit dblog("Startethis parsing");
+    emit dblog("Startethis parsing "+url);
     if(!this->page_exists(url))
             get_page(QUrl(url));
 }

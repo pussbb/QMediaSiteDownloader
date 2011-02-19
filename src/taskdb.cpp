@@ -95,14 +95,21 @@ int TaskDB::add_page(QString page)
 void TaskDB::add_media(QStringList list, int parent)
 {
     QSqlQuery sql;
-
+    QSqlQuery exists;///();
     for (int i = 0; i < list.size(); ++i)
     {
-            sql.exec("INSERT INTO media(from_page,url,downloaded) VALUES("+QString::number(parent)+",\""+list.at(i).toLocal8Bit()+"\",0);");
+        exists.exec("SELECT *  FROM media WHERE url =\""+list.at(i)+"\" ORDER BY id; ");
+        if(!exists.next())
+        {
+            sql.exec("INSERT INTO media(from_page,url,downloaded) VALUES("+QString::number(parent)+",\""+list.at(i)+"\",0);");
             if(sql.lastError().isValid())
                 emit dblog(sql.lastError().text());
             else{
                 emit dblog("Added "+QFileInfo(list.at(i).toLocal8Bit()).fileName());
             }
+         }
+        else{
+            emit dblog("Allready exists "+QFileInfo(list.at(i).toLocal8Bit()).fileName());
+        }
     }
 }

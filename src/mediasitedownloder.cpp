@@ -176,10 +176,10 @@ void MediaSiteDownloder::on_startscan_clicked()
     ui->index->hide();
     ui->parse_info->show();
    /// ui->log->clear();
-    QParseSite* site = new QParseSite(this,"b07e93a3f4c43389c8524c00d45900db");
+   QParseSite* site = new QParseSite(this,"ee50f011c806f8a8420b78057ad2c6d1");
     connect(site,SIGNAL(dblog(QString)),this,SLOT(handleLogMessage(QString)));
-    site->parseSite("http://mfm.ua/top2010/");
-
+  ///  site->parseSite("http://mfm.ua/top2010/");http://fonogramm.net/
+ site->parseSite("http://fonogramm.net/");
 }
 void MediaSiteDownloder::handleLogMessage(QString msg)
 {

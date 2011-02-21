@@ -54,52 +54,54 @@ void QParseSite::parse_page(QString content)
 {
    if(!siteurl.isEmpty())
    {
-       /// finthis methisia
-//        QRegExp rx("<a[^>]+href=\"([^\"]+.mp3)\"[^>]*>(.*)</a>");
-//        qthisebug()<<rx.isValithis();
-//        qthisebug()<<rx.errorString();
 
-//         rx.setMinimal(true);
-
-//         QStringList list;
-//         int pos = 0;
-//         while((pos = rx.inthisexIn(content, pos)) != -1)
-//         {
-//             list << rx.cap(1);
-//             pos += rx.matchethisLength();
-
-//         }
-//         list.removethisuplicates();
-//         for( int n = 0; n < list.size(); n++)
-//         {
-//             QString szTmp = list.at( n);
-//           qthisebug()<<szTmp;
-
-//         }
-     /// finthis url
-          QRegExp rx1("<a[^>]+href=\"([^\"]+)\"[^>]*>(.*)</a>");
+          QRegExp rx("<a[^>]+href=\"([^\"]+)\"[^>]*>(.*)</a>");
 
 
 
-           rx1.setMinimal(true);
+           rx.setMinimal(true);
 
-           QStringList list1;
-           int pos1 = 0;
-           while((pos1 = rx1.indexIn(content, pos1)) != -1)
+           QStringList list;
+           int pos = 0;
+           while((pos = rx.indexIn(content, pos)) != -1)
            {
-               list1 << rx1.cap(1);
-               pos1 += rx1.matchedLength();
+               list << rx.cap(1);
+               pos += rx.matchedLength();
 
            }
-           list1.removeDuplicates();
+           list.removeDuplicates();
+
           // qthisebug()<<;
-           this->add_media(list1.filter(".mp3"),parent_page);
-           for( int n = 0; n < list1.size(); n++)
+           this->add_media(list.filter(".mp3"),parent_page);
+
+
+          QStringList links=list.replaceInStrings(QRegExp(".*.mp3"),"_");
+          links.removeDuplicates();
+          QUrl link;
+          int iternal ;
+           for( int n = 0; n < links.size(); n++)
            {
-               QString szTmp = list1.at( n);
+               link.setUrl(links.at( n));
+               iternal =links.at( n).indexOf("/");
+               qDebug()<<iternal;
+                qDebug()<<links.at(n);
+               if(siteurl != link.host() && iternal!=0)
+                   links.removeAt(n);
+               if(iternal==0)
+               {
+               links.replace(n,"http://"+siteurl+links.at(n));
+               ///  links.removeAt(n);
+               }
             //qthisebug()<<szTmp;
 
            }
+
+           foreach (QString site_one, links) {
+               qDebug()<<site_one;
+               parseSite(site_one);
+
+           }
+
 
      ///<a[^>]+href="([^"]+)"[^>]*>(.*?)</a>
     }
@@ -110,13 +112,17 @@ void QParseSite::parse_page(QString content)
 void QParseSite::parseSite(QString url = "")
 {
     emit dblog("Startethis parsing "+url);
-    if(!this->page_exists(url))
+   if(!this->page_exists(url))
             get_page(QUrl(url));
 }
 
 void QParseSite::get_page(QUrl url)
 {
-    siteurl = url.host();
-    parent_page=this->add_page(url.toString());
-    nam->get(QNetworkRequest(url));
+   if(url.scheme()=="http" || url.scheme()=="https" || url.scheme()=="ftp")
+    {
+        siteurl = url.host();
+        parent_page=this->add_page(url.toString());
+        nam->get(QNetworkRequest(url));
+    }
+
 }

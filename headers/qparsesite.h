@@ -17,6 +17,7 @@ public:
     QNetworkAccessManager* nam;
     ///TaskDB* taskdb;
     int parent_page;
+    bool parsed;
 public slots:
     void handleLogMessage(QString msg);
 private:

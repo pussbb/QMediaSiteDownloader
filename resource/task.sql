@@ -1,7 +1,7 @@
 
 CREATE TABLE pages (
   id INTEGER PRIMARY KEY,
-  url TEXT,
+  url TEXT UNIQUE,
   parsed NUMERIC
 );
 

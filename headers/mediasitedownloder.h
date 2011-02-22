@@ -10,6 +10,7 @@
 #include <QSettings>
 #include <QListWidgetItem>
 #include "headers/taskdb.h"
+#include "headers/qparsesite.h"
 ///
 #include <QDebug>
 ///
@@ -30,13 +31,15 @@ public:
     QTranslator translator;
     QMessageBox msgBox;
     QSettings settings;
-
+    QParseSite* site;
     QMenu *languageMenu;
+    int page_index;
 
 protected:
     void changeEvent(QEvent *e);
 public slots:
     void  handleLogMessage(QString msg);
+    void save_page_parsed(QStringList links,QStringList media);
 private slots:
     void init_app();
     void on_actionExit_triggered();

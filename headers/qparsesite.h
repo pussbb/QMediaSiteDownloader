@@ -9,26 +9,26 @@
 #include <QNetworkReply>
 #include <QDebug>
 #include "headers/taskdb.h"
-class QParseSite : public TaskDB
+#include <QRegExp>
+#include <QStringList>
+class QParseSite : public QObject
 {
     Q_OBJECT
 public:
-    explicit QParseSite(QObject *parent = 0,QString db = "");
+    explicit QParseSite(QObject *parent = 0);
     QNetworkAccessManager* nam;
-    ///TaskDB* taskdb;
     int parent_page;
     bool parsed;
-public slots:
-    void handleLogMessage(QString msg);
+    int total;
+    QStringList links;
+    QStringList media;
 private:
     QString siteurl;
-
-signals:
-    void log(QString msg);
 private slots:
     void get_page(QUrl url);
     void parse_page(QString content);
-
+signals:
+    void page_parsed(QStringList slinks,QStringList smedia);
 
 public slots:
    void finishedSlot(QNetworkReply*);

@@ -23,6 +23,8 @@ public:
     bool page_exists(QString page);
     int page_index;
     int page_parsed;
+    QString get_next_page();
+    void set_page_parsed(int id);
 signals:
     void dblog(QString msg);
 private:

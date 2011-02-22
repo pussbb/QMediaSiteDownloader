@@ -170,17 +170,37 @@ void MediaSiteDownloder::on_tasklist_itemDoubleClicked(QListWidgetItem* item)
             ui->task_url->setText(tasksettings.value("url","null").toString());
     }
 }
-#include "headers/qparsesite.h"
 void MediaSiteDownloder::on_startscan_clicked()
 {
     ui->index->hide();
     ui->parse_info->show();
-   /// ui->log->clear();
-   QParseSite* site = new QParseSite(this,"ee50f011c806f8a8420b78057ad2c6d1");
-    connect(site,SIGNAL(dblog(QString)),this,SLOT(handleLogMessage(QString)));
-  ///  site->parseSite("http://mfm.ua/top2010/");http://fonogramm.net/
- site->parseSite("http://fonogramm.net/");
+   site = new QParseSite(this);
+   taskdb->open("22af645d1859cb5ca6da0c484f1f37ea");
+   connect(site,SIGNAL(dblog(QString)),this,SLOT(handleLogMessage(QString)));
+   connect(site, SIGNAL(page_parsed(QStringList,QStringList)),this,SLOT(save_page_parsed(QStringList,QStringList)));
+   page_index=taskdb->add_page("http://fonogramm.net/");
+   qDebug()<<page_index;
+   site->parseSite("http://fonogramm.net/");
 }
+
+void MediaSiteDownloder::save_page_parsed(QStringList links, QStringList media)
+{
+    taskdb->set_page_parsed(page_index);
+    taskdb->add_media(media,page_index);
+    foreach (QString link, links) {
+        taskdb->add_page(link);
+    }
+    QString page = taskdb->get_next_page();
+    if(!page.isEmpty())
+    {
+
+        page_index = taskdb->page_index;
+            site->parseSite(page);
+            qDebug()<<page_index<<page;
+    }
+
+}
+
 void MediaSiteDownloder::handleLogMessage(QString msg)
 {
 

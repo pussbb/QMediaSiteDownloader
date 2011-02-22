@@ -1,18 +1,12 @@
 #include "headers/qparsesite.h"
 
-QParseSite::QParseSite(QObject *parent,QString thisb) :
-    TaskDB()
+QParseSite::QParseSite(QObject *parent) :
+      QObject()
 {
-    ///this= new TaskthisB();
     nam = new QNetworkAccessManager(this);
     QObject::connect(nam, SIGNAL(finished(QNetworkReply*)),
              this, SLOT(finishedSlot(QNetworkReply*)));
-    ////QObject::connect(this,SIGNAL(dblog(QString)),this,SLOT(handleLogMessage(QString)));
-    this->open(thisb);
-}
-void QParseSite::handleLogMessage(QString msg)
-{
-    emit log(msg);
+    total=0;
 }
 
 void QParseSite::finishedSlot(QNetworkReply* reply)
@@ -48,8 +42,7 @@ void QParseSite::finishedSlot(QNetworkReply* reply)
     // anthis therefore neethis to hanthisle thiseletion.
    /// thiselete reply;
 }
-#include <QRegExp>
-#include <QStringList>
+
 void QParseSite::parse_page(QString content)
 {
    if(!siteurl.isEmpty())
@@ -70,12 +63,9 @@ void QParseSite::parse_page(QString content)
 
            }
            list.removeDuplicates();
-
-          // qthisebug()<<;
-           this->add_media(list.filter(".mp3"),parent_page);
-
-
-          QStringList links=list.replaceInStrings(QRegExp(".*.mp3"),"_");
+           qDebug()<<"Media found:"<<list.filter(".mp3").count();
+            media=list.filter(".mp3");
+         links=list.replaceInStrings(QRegExp(".*.mp3"),"_");
           links.removeDuplicates();
           QUrl link;
           int iternal ;
@@ -83,8 +73,6 @@ void QParseSite::parse_page(QString content)
            {
                link.setUrl(links.at( n));
                iternal =links.at( n).indexOf("/");
-               qDebug()<<iternal;
-                qDebug()<<links.at(n);
                if(siteurl != link.host() && iternal!=0)
                    links.removeAt(n);
                if(iternal==0)
@@ -92,18 +80,12 @@ void QParseSite::parse_page(QString content)
                links.replace(n,"http://"+siteurl+links.at(n));
                ///  links.removeAt(n);
                }
-            //qthisebug()<<szTmp;
-
            }
+//           foreach (QString site_one, links) {
+//               parseSite(site_one);
 
-           foreach (QString site_one, links) {
-               qDebug()<<site_one;
-               parseSite(site_one);
-
-           }
-
-
-     ///<a[^>]+href="([^"]+)"[^>]*>(.*?)</a>
+//           }
+           emit page_parsed(links,media);
     }
 
 
@@ -111,9 +93,13 @@ void QParseSite::parse_page(QString content)
 
 void QParseSite::parseSite(QString url = "")
 {
-    emit dblog("Startethis parsing "+url);
-   if(!this->page_exists(url))
+    media.clear();
+    links.clear();
+///    emit dblog("Startethis parsing "+url);
+ ///  if(!this->page_exists(url))
+    qDebug()<<++total<< url;
             get_page(QUrl(url));
+
 }
 
 void QParseSite::get_page(QUrl url)
@@ -121,7 +107,7 @@ void QParseSite::get_page(QUrl url)
    if(url.scheme()=="http" || url.scheme()=="https" || url.scheme()=="ftp")
     {
         siteurl = url.host();
-        parent_page=this->add_page(url.toString());
+        ///parent_page=this->add_page(url.toString());
         nam->get(QNetworkRequest(url));
     }
 

@@ -24,8 +24,6 @@ void TaskDB::setFolder(QString foldername)
         }
     }
     this->taskfolder=foldername;
-    emit dblog(foldername);
-   // return true;
 }
 
 bool TaskDB::createTask(QString name)
@@ -73,7 +71,6 @@ bool TaskDB::page_exists(QString page)
     QSqlQuery sql("SELECT *  FROM pages WHERE url =\""+page+"\" ORDER BY rowid; ");
     if(sql.next())
     {
-        emit dblog("Given url was found in database");
         page_parsed=0;
         if(sql.value(2).toInt()!=0)
             page_parsed=sql.value(2).toInt();
@@ -87,9 +84,12 @@ int TaskDB::add_page(QString page)
 {
      QSqlQuery sql;
      sql.exec("INSERT INTO pages(url ,parsed) VALUES(\""+page+"\",0);");
+
      if(sql.lastError().isValid())
-        emit dblog(sql.lastError().text());
+          qDebug()<<sql.lastError().text();
+
      return sql.lastInsertId().toInt();
+
 }
 
 void TaskDB::add_media(QStringList list, int parent)
@@ -101,15 +101,35 @@ void TaskDB::add_media(QStringList list, int parent)
         exists.exec("SELECT *  FROM media WHERE url =\""+list.at(i)+"\" ORDER BY id; ");
         if(!exists.next())
         {
-            sql.exec("INSERT INTO media(from_page,url,downloaded) VALUES("+QString::number(parent)+",\""+list.at(i)+"\",0);");
+               qDebug()<<sql.lastError().text(); sql.exec("INSERT INTO media(from_page,url,downloaded) VALUES("+QString::number(parent)+",\""+list.at(i)+"\",0);");
             if(sql.lastError().isValid())
-                emit dblog(sql.lastError().text());
+            {}
             else{
-                emit dblog("Added "+QFileInfo(list.at(i).toLocal8Bit()).fileName());
+
             }
          }
         else{
-            emit dblog("Allready exists "+QFileInfo(list.at(i).toLocal8Bit()).fileName());
+
         }
     }
+}
+
+void TaskDB::set_page_parsed(int id)
+{
+    QSqlQuery sql;
+    sql.exec("UPDATE pages SET parsed=1 WHERE id="+QString::number(id)+";");
+    qDebug()<<sql.lastError().text();
+}
+
+QString TaskDB::get_next_page()
+{
+    QSqlQuery sql;
+    sql.exec("SELECT *  FROM pages WHERE parsed = 0 ORDER BY id; ");
+    if(sql.next())
+    {
+        page_index=sql.value(0).toInt();
+        return sql.value(1).toString();
+    }
+    else
+        return "";
 }

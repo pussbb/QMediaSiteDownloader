@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui xml network sql
+QT       += core gui network sql thread
 
 TARGET = QMSD
 TEMPLATE = app

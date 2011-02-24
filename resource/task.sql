@@ -8,7 +8,7 @@ CREATE TABLE pages (
 CREATE TABLE media (
   id INTEGER PRIMARY KEY,
   from_page INTEGER,
-  url TEXT,
+  url TEXT UNIQUE,
   downloaded NUMERIC
 );
 

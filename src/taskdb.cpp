@@ -3,7 +3,7 @@
 TaskDB::TaskDB() :
     QObject()
 {
-        taskfolder=QDir::toNativeSeparators ( QApplication::applicationDirPath()+"/tasks/" ) ;
+    taskfolder= QApplication::applicationDirPath()+QDir::toNativeSeparators("/tasks/");
 }
 void TaskDB::setFolder(QString foldername)
 {
@@ -33,12 +33,12 @@ bool TaskDB::createTask(QString name)
     if (!sqlres.open(QIODevice::ReadOnly))
     {
         QMessageBox::warning(0,  QObject::tr("Task creation error"),
-                              QObject::tr("Cannot open file :\n%1.")
+                             QObject::tr("Cannot open file :\n%1.")
                              .arg(sqlres.errorString()));
         return false;
     }
     if(db.isOpen())
-            db.close();
+        db.close();
     db = QSqlDatabase::addDatabase("QSQLITE");
     db.setDatabaseName(taskfolder+name+".task");
     if (!db.open()) {
@@ -50,13 +50,13 @@ bool TaskDB::createTask(QString name)
     QSqlQuery sql;
     QStringList querylist=query.split(";");
     for (int i = 0; i < querylist.size(); ++i)
-            sql.exec(querylist.at(i));
+        sql.exec(querylist.at(i));
     return true;
 }
 bool TaskDB::open(QString dbname)
 {
     if(db.isOpen())
-            db.close();
+        db.close();
     db = QSqlDatabase::addDatabase("QSQLITE");
     db.setDatabaseName(taskfolder+dbname+".task");
     if (!db.open()) {
@@ -68,7 +68,8 @@ bool TaskDB::open(QString dbname)
 }
 bool TaskDB::page_exists(QString page)
 {
-    QSqlQuery sql("SELECT *  FROM pages WHERE url =\""+page+"\" ORDER BY rowid; ");
+    QSqlQuery sql;
+    sql.exec("SELECT *  FROM pages WHERE url =\""+page+"\" ORDER BY rowid; ");
     if(sql.next())
     {
         page_parsed=0;
@@ -82,42 +83,39 @@ bool TaskDB::page_exists(QString page)
 
 int TaskDB::add_page(QString page)
 {
-     QSqlQuery sql;
-     sql.exec("INSERT INTO pages(url ,parsed) VALUES(\""+page+"\",0);");
+    QSqlQuery sql;
+    sql.exec("INSERT INTO pages(url ,parsed) VALUES(\""+page+"\",0);");
 
-     if(sql.lastError().isValid())
-          qDebug()<<sql.lastError().text();
+    if(sql.lastError().isValid())
+        qDebug()<<sql.lastError().text();
 
-     return sql.lastInsertId().toInt();
+    return sql.lastInsertId().toInt();
 
 }
 
+void TaskDB::add_page(QStringList pages)
+{
+    QSqlQuery sql;
+    sql.prepare("INSERT INTO pages(url ,parsed) VALUES(?,0);");
+    sql.addBindValue(pages);
+    if (!sql.execBatch())
+        qDebug() << sql.lastError();
+
+}
 void TaskDB::add_media(QStringList list, int parent)
 {
     QSqlQuery sql;
-    QSqlQuery exists;///();
+    QSqlQuery exists;
     for (int i = 0; i < list.size(); ++i)
     {
-        exists.exec("SELECT *  FROM media WHERE url =\""+list.at(i)+"\" ORDER BY id; ");
-        if(!exists.next())
-        {
-               qDebug()<<sql.lastError().text(); sql.exec("INSERT INTO media(from_page,url,downloaded) VALUES("+QString::number(parent)+",\""+list.at(i)+"\",0);");
-            if(sql.lastError().isValid())
-            {}
-            else{
-
-            }
-         }
-        else{
-
-        }
+        sql.exec("INSERT INTO media(from_page,url,downloaded) VALUES("+QString::number(parent)+",\""+list.at(i)+"\",0);");
     }
 }
 
-void TaskDB::set_page_parsed(int id)
+void TaskDB::set_page_parsed(int id,int val)
 {
     QSqlQuery sql;
-    sql.exec("UPDATE pages SET parsed=1 WHERE id="+QString::number(id)+";");
+    sql.exec("UPDATE pages SET parsed="+QString::number(val)+" WHERE id="+QString::number(id)+";");
     qDebug()<<sql.lastError().text();
 }
 
@@ -132,4 +130,21 @@ QString TaskDB::get_next_page()
     }
     else
         return "";
+}
+
+int TaskDB::count_crawld()
+{
+    QSqlQuery sql;
+    sql.exec("select count(*) from pages where parsed =1");
+    if(sql.next())
+        return sql.value(0).toInt();
+    return -1;
+}
+int TaskDB::count_left()
+{
+    QSqlQuery sql;
+    sql.exec("select count(*) from pages where parsed =1");
+    if(sql.next())
+        return sql.value(0).toInt();
+    return -1;
 }

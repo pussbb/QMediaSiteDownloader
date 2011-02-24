@@ -16,7 +16,6 @@ public:
     void setFolder(QString foldername);
     bool createTask(QString name);
     inline void close(){db.close();};
-
     int add_page(QString page);
     void add_media(QStringList list,int parent);
     bool open(QString dbname);
@@ -24,7 +23,10 @@ public:
     int page_index;
     int page_parsed;
     QString get_next_page();
-    void set_page_parsed(int id);
+    void set_page_parsed(int id,int val = 1 );
+    int count_crawld();
+    int count_left();
+    void add_page(QStringList pages);
 signals:
     void dblog(QString msg);
 private:

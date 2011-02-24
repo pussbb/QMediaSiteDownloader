@@ -26,6 +26,7 @@ public:
     void set_page_parsed(int id,int val = 1 );
     int count_crawld();
     int count_left();
+    int count_media();
     void add_page(QStringList pages);
 signals:
     void dblog(QString msg);

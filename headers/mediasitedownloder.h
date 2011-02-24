@@ -11,6 +11,8 @@
 #include <QListWidgetItem>
 #include "headers/taskdb.h"
 #include "headers/qparsesite.h"
+#include <QTime>
+#include <QTimer>
 ///
 #include <QDebug>
 ///
@@ -35,10 +37,12 @@ public:
     QMenu *languageMenu;
     int page_index;
     QString media_path;
+    QTime time;
+    QTimer timer;
 protected:
     void changeEvent(QEvent *e);
 public slots:
-    void  handleLogMessage(QString msg);
+    void handleLogMessage(QString msg);
     void save_page_parsed(QStringList links,QStringList media,QString msg);
 private slots:
     void init_app();
@@ -50,6 +54,7 @@ private slots:
     void on_actionNew_Task_triggered();
     void on_tasklist_itemDoubleClicked(QListWidgetItem* item);
     void on_startscan_clicked();
+    void updateDisplay();
 
 private:
     Ui::MediaSiteDownloder *ui;

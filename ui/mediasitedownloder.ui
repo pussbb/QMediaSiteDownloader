@@ -340,7 +340,7 @@
              <string>Left</string>
             </property>
            </widget>
-           <widget class="QLabel" name="lrft_num">
+           <widget class="QLabel" name="left_num">
             <property name="geometry">
              <rect>
               <x>114</x>
@@ -368,9 +368,35 @@
              <rect>
               <x>410</x>
               <y>32</y>
+              <width>141</width>
+              <height>16</height>
+             </rect>
+            </property>
+           </widget>
+           <widget class="QLabel" name="label_9">
+            <property name="geometry">
+             <rect>
+              <x>282</x>
+              <y>54</y>
               <width>56</width>
               <height>15</height>
              </rect>
+            </property>
+            <property name="text">
+             <string>Time</string>
+            </property>
+           </widget>
+           <widget class="QLabel" name="total_time">
+            <property name="geometry">
+             <rect>
+              <x>368</x>
+              <y>54</y>
+              <width>183</width>
+              <height>16</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>TextLabel</string>
             </property>
            </widget>
           </widget>

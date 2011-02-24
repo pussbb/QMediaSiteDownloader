@@ -135,7 +135,7 @@ QString TaskDB::get_next_page()
 int TaskDB::count_crawld()
 {
     QSqlQuery sql;
-    sql.exec("select count(*) from pages where parsed =1");
+    sql.exec("select count(*) from pages where parsed = 1");
     if(sql.next())
         return sql.value(0).toInt();
     return -1;
@@ -143,7 +143,15 @@ int TaskDB::count_crawld()
 int TaskDB::count_left()
 {
     QSqlQuery sql;
-    sql.exec("select count(*) from pages where parsed =1");
+    sql.exec("select count(*) from pages where parsed = 0");
+    if(sql.next())
+        return sql.value(0).toInt();
+    return -1;
+}
+int TaskDB::count_media()
+{
+    QSqlQuery sql;
+    sql.exec("select count(*) from pages where downloaded = 0");
     if(sql.next())
         return sql.value(0).toInt();
     return -1;

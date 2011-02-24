@@ -6,9 +6,7 @@ QParseSite::QParseSite(): QThread()
     nam = new QNetworkAccessManager(this);
     QObject::connect(nam, SIGNAL(finished(QNetworkReply*)),
                      this, SLOT(finishedSlot(QNetworkReply*)));
-    total=0;
     start(QThread::LowPriority);
-
 }
 
 void QParseSite::finishedSlot(QNetworkReply* reply)

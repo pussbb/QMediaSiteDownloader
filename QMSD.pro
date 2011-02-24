@@ -4,14 +4,14 @@
 #
 #-------------------------------------------------
 
-QT       += core gui network sql thread
+QT       += core gui network sql thread exceptions
 
 TARGET = QMSD
 TEMPLATE = app
-OBJECTS_DIR = ./obj/
-MOC_DIR = ./obj/
-DESTDIR = ./bin/
-UI_DIR = ./obj/
+unix:OBJECTS_DIR = ./obj/
+unix:MOC_DIR = ./obj/
+unix:DESTDIR = ./bin/
+unix:UI_DIR = ./obj/
 
 TRANSLATIONS = ./lang/qmsd_ru.ts \
                 ./lang/qmsd_def.ts \

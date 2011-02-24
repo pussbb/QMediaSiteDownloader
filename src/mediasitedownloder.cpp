@@ -182,21 +182,31 @@ void MediaSiteDownloder::on_startscan_clicked()
    connect(site, SIGNAL(page_parsed(QStringList,QStringList,QString)),this,SLOT(save_page_parsed(QStringList,QStringList,QString)));
    page_index=taskdb->add_page(ui->task_url->text());
    ui->curent_cheking->setText(ui->task_url->text());
+
+   time.start();
+   updateDisplay();
+   connect(&timer, SIGNAL(timeout()), this, SLOT(updateDisplay()));
+   timer.start(1000);
+
    site->parseSite(ui->task_url->text());
 }
 
 void MediaSiteDownloder::save_page_parsed(QStringList links, QStringList media,QString msg)
 {
-     taskdb->set_page_parsed(page_index,2);
+    ui->curent_cheking->setText(" Saving ..."+ui->curent_cheking->text());
     if(msg.isEmpty())
     {
-
         taskdb->set_page_parsed(page_index);
-        taskdb->set_page_parsed(page_index);
-        taskdb->add_media(media,page_index);
+        if(media.count()>0)
+        {
+            taskdb->add_media(media,page_index);
+            ui->media_num->setText(QString::number(taskdb->count_media()));
+        }
         foreach (QString link, links) {
                 taskdb->add_page(link);
         }
+        ui->numder_checked->setText(QString::number(taskdb->count_crawld()));
+        ui->left_num->setText(QString::number(taskdb->count_left()));
     }
     else{
         taskdb->set_page_parsed(page_index,2);
@@ -212,7 +222,18 @@ void MediaSiteDownloder::save_page_parsed(QStringList links, QStringList media,Q
     }
 
 }
+void MediaSiteDownloder::updateDisplay()
+{
+    int secs = time.elapsed() / 1000;
+    int mins = (secs / 60) % 60;
+    int hours = (secs / 3600);
+    secs = secs % 60;
+    ui->total_time->setText(QString("%1:%2:%3")
+                            .arg(hours, 2, 10, QLatin1Char('0'))
+                            .arg(mins, 2, 10, QLatin1Char('0'))
+                            .arg(secs, 2, 10, QLatin1Char('0')) );
 
+}
 void MediaSiteDownloder::handleLogMessage(QString msg)
 {
 

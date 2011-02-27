@@ -408,8 +408,85 @@
           </widget>
           <widget class="QWidget" name="tab_2">
            <attribute name="title">
-            <string>Tab 2</string>
+            <string>Media files</string>
            </attribute>
+           <layout class="QGridLayout" name="gridLayout_4">
+            <item row="0" column="0">
+             <widget class="QGroupBox" name="groupBox">
+              <property name="minimumSize">
+               <size>
+                <width>547</width>
+                <height>87</height>
+               </size>
+              </property>
+              <property name="title">
+               <string>Downloading info</string>
+              </property>
+              <widget class="QLabel" name="label_10">
+               <property name="geometry">
+                <rect>
+                 <x>12</x>
+                 <y>20</y>
+                 <width>99</width>
+                 <height>16</height>
+                </rect>
+               </property>
+               <property name="text">
+                <string>Current:</string>
+               </property>
+              </widget>
+              <widget class="QLabel" name="filename_media">
+               <property name="geometry">
+                <rect>
+                 <x>88</x>
+                 <y>20</y>
+                 <width>445</width>
+                 <height>16</height>
+                </rect>
+               </property>
+              </widget>
+              <widget class="QLabel" name="label_11">
+               <property name="geometry">
+                <rect>
+                 <x>12</x>
+                 <y>38</y>
+                 <width>63</width>
+                 <height>16</height>
+                </rect>
+               </property>
+               <property name="text">
+                <string>From</string>
+               </property>
+              </widget>
+              <widget class="QLabel" name="from_url_media">
+               <property name="geometry">
+                <rect>
+                 <x>76</x>
+                 <y>36</y>
+                 <width>471</width>
+                 <height>16</height>
+                </rect>
+               </property>
+              </widget>
+              <widget class="QProgressBar" name="progressBar">
+               <property name="geometry">
+                <rect>
+                 <x>16</x>
+                 <y>58</y>
+                 <width>515</width>
+                 <height>23</height>
+                </rect>
+               </property>
+               <property name="value">
+                <number>24</number>
+               </property>
+              </widget>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QListView" name="medialist"/>
+            </item>
+           </layout>
           </widget>
          </widget>
         </item>

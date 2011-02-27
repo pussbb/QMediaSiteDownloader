@@ -174,6 +174,7 @@ void MediaSiteDownloder::on_tasklist_itemDoubleClicked(QListWidgetItem* item)
            media_path = tasksettings.value("media_path","null").toString();
            ui->date_added->setText(tasksettings.value("creation_date","null").toString());
            ui->pages_crawled->setText(QString::number(taskdb.count_crawld()));
+           ui->main_info->setEnabled(true);
 
     }
 }
@@ -190,6 +191,7 @@ void MediaSiteDownloder::on_startscan_clicked()
    connect(&timer, SIGNAL(timeout()), this, SLOT(updateDisplay()));
    timer.start(1000);
    site.start();
+   ui->mainToolBar->setEnabled(false);
 //   site.nam->moveToThread(site.thread());
    connect(&site, SIGNAL(page_parsed(QStringList,QStringList,QString)),this,SLOT(save_page_parsed(QStringList,QStringList,QString)));
    site.parseSite(ui->task_url->text());
@@ -246,3 +248,4 @@ void MediaSiteDownloder::handleLogMessage(QString msg)
 {
     ui->log->addItem(QDateTime::currentDateTime ().toString()+"  "+msg);
 }
+

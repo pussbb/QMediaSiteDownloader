@@ -45,6 +45,7 @@ public slots:
     void handleLogMessage(QString msg);
     void save_page_parsed(QStringList links,QStringList media,QString msg);
 private slots:
+
     void init_app();
     void on_actionExit_triggered();
     void switchLanguage(QAction *action);
@@ -57,6 +58,7 @@ private slots:
     void updateDisplay();
 
 private:
+    bool parsing;
     Ui::MediaSiteDownloder *ui;
 };
 

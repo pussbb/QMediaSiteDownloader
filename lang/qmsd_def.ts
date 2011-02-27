@@ -42,7 +42,7 @@
 <context>
     <name>Language</name>
     <message>
-        <location filename="../src/mediasitedownloder.cpp" line="81"/>
+        <location filename="../src/mediasitedownloder.cpp" line="96"/>
         <source>English</source>
         <translation type="unfinished"></translation>
     </message>
@@ -141,59 +141,84 @@
     </message>
     <message>
         <location filename="../ui/mediasitedownloder.ui" line="411"/>
-        <source>Tab 2</source>
+        <source>Media files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/mediasitedownloder.ui" line="433"/>
+        <location filename="../ui/mediasitedownloder.ui" line="423"/>
+        <source>Downloading info</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/mediasitedownloder.ui" line="435"/>
+        <source>Current:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/mediasitedownloder.ui" line="458"/>
+        <source>From</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/mediasitedownloder.ui" line="510"/>
         <source>File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/mediasitedownloder.ui" line="440"/>
+        <location filename="../ui/mediasitedownloder.ui" line="517"/>
         <source>Help</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/mediasitedownloder.ui" line="447"/>
+        <location filename="../ui/mediasitedownloder.ui" line="524"/>
         <source>Options</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/mediasitedownloder.ui" line="471"/>
+        <location filename="../ui/mediasitedownloder.ui" line="548"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/mediasitedownloder.ui" line="476"/>
+        <location filename="../ui/mediasitedownloder.ui" line="553"/>
         <source>About</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/mediasitedownloder.ui" line="481"/>
+        <location filename="../ui/mediasitedownloder.ui" line="558"/>
         <source>About QT</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/mediasitedownloder.ui" line="490"/>
-        <location filename="../ui/mediasitedownloder.ui" line="493"/>
+        <location filename="../ui/mediasitedownloder.ui" line="567"/>
+        <location filename="../ui/mediasitedownloder.ui" line="570"/>
         <source>New Task</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/mediasitedownloder.ui" line="502"/>
+        <location filename="../ui/mediasitedownloder.ui" line="579"/>
         <source>Remove Task</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mediasitedownloder.cpp" line="60"/>
-        <location filename="../src/mediasitedownloder.cpp" line="107"/>
-        <location filename="../src/mediasitedownloder.cpp" line="119"/>
+        <location filename="../src/mediasitedownloder.cpp" line="51"/>
+        <source>Application is working now.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mediasitedownloder.cpp" line="52"/>
+        <source>Do you realy want to close application?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mediasitedownloder.cpp" line="75"/>
+        <location filename="../src/mediasitedownloder.cpp" line="122"/>
+        <location filename="../src/mediasitedownloder.cpp" line="134"/>
         <source>langmenu</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mediasitedownloder.cpp" line="82"/>
+        <location filename="../src/mediasitedownloder.cpp" line="97"/>
         <source>&amp;%2</source>
         <translation type="unfinished"></translation>
     </message>

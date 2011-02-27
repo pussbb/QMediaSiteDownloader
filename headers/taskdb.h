@@ -21,7 +21,7 @@ public:
     bool page_exists(QString page);
     int page_index;
     int page_parsed;
-
+    void media_files();
     QString get_next_page();
     void set_page_parsed(int id,int val = 1 );
     int count_crawld();

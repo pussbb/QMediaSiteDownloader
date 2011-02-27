@@ -155,3 +155,14 @@ int TaskDB::count_media()
         return sql.value(0).toInt();
     return -1;
 }
+void TaskDB::media_files()
+{
+    QSqlQuery sql;
+    sql.exec("select * from media");
+    while(sql.next())
+    {
+          qDebug() <<"url" << ": " << sql.value(1) <<"down:"<<sql.value(3)<< endl;
+    }
+
+
+}

@@ -5,18 +5,17 @@
 #include <QDir>
 #include <QMessageBox>
 #include <QtSql>
-
 class TaskDB : public QObject
 {
     Q_OBJECT
 public:
     explicit TaskDB();
-
     QSqlDatabase db;
     void setFolder(QString foldername);
     bool createTask(QString name);
     inline void close(){db.close();};
     int add_page(QString page);
+    void add_page(QStringList pages);
     void add_media(QStringList list,int parent);
     bool open(QString dbname);
     bool page_exists(QString page);
@@ -27,7 +26,6 @@ public:
     int count_crawld();
     int count_left();
     int count_media();
-    void add_page(QStringList pages);
 signals:
     void dblog(QString msg);
 private:

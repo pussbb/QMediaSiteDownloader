@@ -29,11 +29,11 @@ public:
     explicit MediaSiteDownloder(QWidget *parent = 0);
     ~MediaSiteDownloder();
     QDir dir;
-    TaskDB *taskdb;
+    TaskDB taskdb;
     QTranslator translator;
     QMessageBox msgBox;
     QSettings settings;
-    QParseSite* site;
+    QParseSite site;
     QMenu *languageMenu;
     int page_index;
     QString media_path;

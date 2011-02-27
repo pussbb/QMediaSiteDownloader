@@ -1,12 +1,10 @@
 #include "headers/qparsesite.h"
 
-QParseSite::QParseSite(): QThread()
+QParseSite::QParseSite(QObject *parent): QThread(parent)
 
 {
-    nam = new QNetworkAccessManager(this);
-    QObject::connect(nam, SIGNAL(finished(QNetworkReply*)),
-                     this, SLOT(finishedSlot(QNetworkReply*)));
-    start(QThread::LowPriority);
+    nam = new QNetworkAccessManager();
+    connect(nam, SIGNAL(finished(QNetworkReply*)), SLOT(finishedSlot(QNetworkReply*)));
 }
 
 void QParseSite::finishedSlot(QNetworkReply* reply)
@@ -82,15 +80,23 @@ void QParseSite::parseSite(QString url = "")
 {
     media.clear();
     links.clear();
-    get_page(QUrl(url));
+    url_current.setUrl(url);
+   get_page(url_current);
+}
+void QParseSite::run()
+{
+  //  nam->moveToThread(this);
+ ///       connect(nam, SIGNAL(finished(QNetworkReply*)), SLOT(finishedSlot(QNetworkReply*)));
 
 }
 
 void QParseSite::get_page(QUrl url)
 {
+    qDebug()<<this->thread();
     if(url.scheme()=="http" || url.scheme()=="https" || url.scheme()=="ftp")
     {
         siteurl = url.host();
+
         nam->get(QNetworkRequest(url));
     }
     else

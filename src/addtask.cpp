@@ -38,9 +38,10 @@ bool AddTask::validateUrl(QString url)
 
 void AddTask::on_buttonBox_clicked(QAbstractButton* button)
 {
+    QDir dir_m(ui->pathtomedia->text());
     if(ui->buttonBox->buttonRole(button)==0 ){
         if(!ui->taskname->text().isEmpty() && !ui->pathtomedia->text().isEmpty() &&
-                !ui->taskurl->text().isEmpty() )
+          dir_m.exists() &&  !ui->taskurl->text().isEmpty() && validateUrl(ui->taskurl->text()))
          {
 
              map.insert("taskname", ui->taskname->text());
@@ -50,8 +51,9 @@ void AddTask::on_buttonBox_clicked(QAbstractButton* button)
          }
          else
             {
-                QMessageBox::warning(0,  tr("Erorr"),
-                                      tr("Please fill all fields."));
+                QMessageBox msgBox;
+                msgBox.setText(tr("Please fill al fields."));
+                msgBox.exec();
             }
         }
         else

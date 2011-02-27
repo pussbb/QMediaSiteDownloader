@@ -7,7 +7,9 @@ MediaSiteDownloder::MediaSiteDownloder(QWidget *parent) :
     ui(new Ui::MediaSiteDownloder)
 {
     ui->setupUi(this);
-    taskdb = new TaskDB;
+    qDebug()<<this->thread();
+    ///taskdb.start(QThread::LowestPriority);
+
     ///taskdb=new TaskDB();
     QMenuBar* bar=this->menuBar();
     QList<QAction *> actions = bar->actions();
@@ -21,7 +23,7 @@ MediaSiteDownloder::MediaSiteDownloder(QWidget *parent) :
             action->menu()->addMenu(languageMenu);
         }
     }
-    taskdb->setFolder(taskdir);
+    taskdb.setFolder(taskdir);
     init_app();
 }
 void MediaSiteDownloder::init_app()
@@ -146,16 +148,17 @@ void MediaSiteDownloder::on_tasklist_customContextMenuRequested(QPoint pos)
 void MediaSiteDownloder::on_actionNew_Task_triggered()
 {
     AddTask *task = new AddTask(this);
-    if(task->exec()== QDialog::Accepted)
+    if(task->exec()==QDialog::Accepted)
     {
        QString dbname=QCryptographicHash::hash (task->map.value("taskname").toAscii(), QCryptographicHash::Md5 ).toHex();
-       taskdb->createTask(dbname);
-       QSettings taskset(taskdir+task->map.value("taskname")+".project",QSettings::NativeFormat);
+       taskdb.createTask(dbname);
+       QSettings taskset(taskdir+task->map.value("taskname")+".project",QSettings::IniFormat);
        taskset.setValue("dbname",dbname);
        foreach (QString str, task->map.keys())
            taskset.setValue(str,task->map.value(str));
        taskset.setValue("creation_date",QDateTime::currentDateTime ().toString());
-       taskdb->close();
+       taskdb.close();
+       taskset.sync();
        init_app();
     }
 
@@ -165,59 +168,64 @@ void MediaSiteDownloder::on_tasklist_itemDoubleClicked(QListWidgetItem* item)
 {
     if(!item->text().isEmpty())
     {
-           QSettings tasksettings(taskdir+item->text()+".project",QSettings::NativeFormat);
+           QSettings tasksettings(taskdir+item->text()+".project",QSettings::IniFormat);
            ui->task_url->setText(tasksettings.value("url","null").toString());
-           taskdb->open(tasksettings.value("dbname","null").toString());
+           taskdb.open(tasksettings.value("dbname","null").toString());
            media_path = tasksettings.value("media_path","null").toString();
            ui->date_added->setText(tasksettings.value("creation_date","null").toString());
-           ui->pages_crawled->setText(QString::number(taskdb->count_crawld()));
+           ui->pages_crawled->setText(QString::number(taskdb.count_crawld()));
 
     }
 }
 void MediaSiteDownloder::on_startscan_clicked()
 {
-    ui->index->hide();
-    ui->parse_info->show();
-   site = new QParseSite();
-   connect(site, SIGNAL(page_parsed(QStringList,QStringList,QString)),this,SLOT(save_page_parsed(QStringList,QStringList,QString)));
-   page_index=taskdb->add_page(ui->task_url->text());
+    qDebug()<<this->thread();
+   ui->index->hide();
+   ui->parse_info->show();
+   ///site = new QParseSite();
+   page_index=taskdb.add_page(ui->task_url->text());
    ui->curent_cheking->setText(ui->task_url->text());
-
    time.start();
    updateDisplay();
    connect(&timer, SIGNAL(timeout()), this, SLOT(updateDisplay()));
    timer.start(1000);
-
-   site->parseSite(ui->task_url->text());
+   site.start();
+//   site.nam->moveToThread(site.thread());
+   connect(&site, SIGNAL(page_parsed(QStringList,QStringList,QString)),this,SLOT(save_page_parsed(QStringList,QStringList,QString)));
+   site.parseSite(ui->task_url->text());
+ ///  site.run();
 }
+
 
 void MediaSiteDownloder::save_page_parsed(QStringList links, QStringList media,QString msg)
 {
+
+   ///exit(-1);
     ui->curent_cheking->setText(" Saving ..."+ui->curent_cheking->text());
     if(msg.isEmpty())
     {
-        taskdb->set_page_parsed(page_index);
+        taskdb.set_page_parsed(page_index);
         if(media.count()>0)
         {
-            taskdb->add_media(media,page_index);
-            ui->media_num->setText(QString::number(taskdb->count_media()));
+            taskdb.add_media(media,page_index);
+            ui->media_num->setText(QString::number(taskdb.count_media()));
         }
-        foreach (QString link, links) {
-                taskdb->add_page(link);
-        }
-        ui->numder_checked->setText(QString::number(taskdb->count_crawld()));
-        ui->left_num->setText(QString::number(taskdb->count_left()));
+qDebug()<<"starting saving to db"<<time.elapsed();
+        taskdb.add_page(links);
+qDebug()<<"end saving to db"<<time.elapsed();;
+        ui->numder_checked->setText(QString::number(taskdb.count_crawld()));
+        ui->left_num->setText(QString::number(taskdb.count_left()));
     }
     else{
-        taskdb->set_page_parsed(page_index,2);
+        taskdb.set_page_parsed(page_index,2);
         ui->log->addItem(msg);
     }
-    QString page = taskdb->get_next_page();
+    QString page = taskdb.get_next_page();
     if(!page.isEmpty())
     {
 
-            page_index = taskdb->page_index;
-            site->parseSite(page);
+            page_index = taskdb.page_index;
+            site.parseSite(page);
             ui->curent_cheking->setText(page);
     }
 
@@ -227,7 +235,7 @@ void MediaSiteDownloder::updateDisplay()
     int secs = time.elapsed() / 1000;
     int mins = (secs / 60) % 60;
     int hours = (secs / 3600);
-    secs = secs % 60;
+    secs = secs % 60;    void add_page(QStringList pages);
     ui->total_time->setText(QString("%1:%2:%3")
                             .arg(hours, 2, 10, QLatin1Char('0'))
                             .arg(mins, 2, 10, QLatin1Char('0'))
@@ -236,7 +244,5 @@ void MediaSiteDownloder::updateDisplay()
 }
 void MediaSiteDownloder::handleLogMessage(QString msg)
 {
-
-    qDebug()<<taskdb->db.databaseName();
     ui->log->addItem(QDateTime::currentDateTime ().toString()+"  "+msg);
 }

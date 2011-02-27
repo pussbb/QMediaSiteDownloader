@@ -2,7 +2,6 @@
 #define QPARSESITE_H
 
 #include <QSharedData>
-#include <QObject>
 #include <QThread>
 #include <QNetworkAccessManager>
 #include <QUrl>
@@ -16,13 +15,15 @@ class QParseSite :  public QThread
 {
     Q_OBJECT
 public:
-    explicit QParseSite();
-    QNetworkAccessManager* nam;
+    QParseSite(QObject *parent = 0);
+    QNetworkAccessManager *nam;
     int parent_page;
     bool parsed;
     int total;
+    QUrl url_current;
     QStringList links;
     QStringList media;
+    void run();
 private:
     QString siteurl;
 private slots:
@@ -32,9 +33,10 @@ signals:
     void page_parsed(QStringList slinks,QStringList smedia,QString msg);
 
 public slots:
-   void finishedSlot(QNetworkReply*);
+
    void parseSite(QString url);
 
+   void finishedSlot(QNetworkReply*);
 
 };
 

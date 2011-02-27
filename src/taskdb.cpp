@@ -3,8 +3,9 @@
 TaskDB::TaskDB() :
     QObject()
 {
-    taskfolder= QApplication::applicationDirPath()+QDir::toNativeSeparators("/tasks/");
+  taskfolder= QApplication::applicationDirPath()+QDir::toNativeSeparators("/tasks/");
 }
+
 void TaskDB::setFolder(QString foldername)
 {
     QDir dir;
@@ -86,8 +87,8 @@ int TaskDB::add_page(QString page)
     QSqlQuery sql;
     sql.exec("INSERT INTO pages(url ,parsed) VALUES(\""+page+"\",0);");
 
-    if(sql.lastError().isValid())
-        qDebug()<<sql.lastError().text();
+//    if(sql.lastError().isValid())
+//        qDebug()<<sql.lastError().text();
 
     return sql.lastInsertId().toInt();
 
@@ -95,11 +96,9 @@ int TaskDB::add_page(QString page)
 
 void TaskDB::add_page(QStringList pages)
 {
-    QSqlQuery sql;
-    sql.prepare("INSERT INTO pages(url ,parsed) VALUES(?,0);");
-    sql.addBindValue(pages);
-    if (!sql.execBatch())
-        qDebug() << sql.lastError();
+    foreach (QString page, pages) {
+        add_page(page);
+    }
 
 }
 void TaskDB::add_media(QStringList list, int parent)
@@ -116,7 +115,7 @@ void TaskDB::set_page_parsed(int id,int val)
 {
     QSqlQuery sql;
     sql.exec("UPDATE pages SET parsed="+QString::number(val)+" WHERE id="+QString::number(id)+";");
-    qDebug()<<sql.lastError().text();
+   /// qDebug()<<sql.lastError().text();
 }
 
 QString TaskDB::get_next_page()
@@ -151,7 +150,7 @@ int TaskDB::count_left()
 int TaskDB::count_media()
 {
     QSqlQuery sql;
-    sql.exec("select count(*) from pages where downloaded = 0");
+    sql.exec("select count(*) from media where downloaded = 0");
     if(sql.next())
         return sql.value(0).toInt();
     return -1;

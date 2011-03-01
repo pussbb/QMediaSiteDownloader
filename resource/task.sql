@@ -1,4 +1,7 @@
-
+PRAGMA synchronous = OFF;
+PRAGMA temp_store = MEMORY;
+PRAGMA quick_check; 
+PRAGMA journal_mode =  MEMORY;
 CREATE TABLE pages (
   id INTEGER PRIMARY KEY,
   url TEXT UNIQUE,

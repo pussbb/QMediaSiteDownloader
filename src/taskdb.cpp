@@ -65,6 +65,11 @@ bool TaskDB::open(QString dbname)
                               tr("Cannot open database."), QMessageBox::Cancel);
         return false;
     }
+    QSqlQuery sql;
+    sql.exec("PRAGMA synchronous = OFF;");
+    sql.exec("PRAGMA temp_store = MEMORY;");
+    sql.exec(" PRAGMA quick_check; ");
+    sql.exec("PRAGMA journal_mode =  MEMORY;");
     return true;
 }
 bool TaskDB::page_exists(QString page)

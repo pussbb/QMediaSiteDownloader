@@ -92,7 +92,6 @@ void QParseSite::run()
 
 void QParseSite::get_page(QUrl url)
 {
-    qDebug()<<this->thread();
     if(url.scheme()=="http" || url.scheme()=="https" || url.scheme()=="ftp")
     {
         siteurl = url.host();

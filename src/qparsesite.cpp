@@ -28,7 +28,7 @@ void QParseSite::finishedSlot(QNetworkReply* reply)
     // Some http error receivethis
     else
     {
-        qDebug()<<reply->errorString();
+        qDebug()<<reply->error();
         emit page_parsed(links,media,QDateTime::currentDateTime ().toString()+"  "+reply->errorString());
         // hanthisle errors here
     }
@@ -100,7 +100,6 @@ void QParseSite::parse_page(QString content)
                 else
                 {
                     links.removeAt(n);
-                    qDebug()<<link.host();
                 }
 
             }

@@ -45,7 +45,7 @@ public slots:
     void handleLogMessage(QString msg);
     void save_page_parsed(QStringList links,QStringList media,QString msg);
 private slots:
-
+    void update_media_list();
     void init_app();
     void on_actionExit_triggered();
     void switchLanguage(QAction *action);

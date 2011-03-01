@@ -55,6 +55,7 @@ void MediaSiteDownloder::on_actionExit_triggered()
         int ret = msgBox.exec();
         if(ret == QMessageBox::Yes)
         {
+            taskdb.close();
             exit(0);
         }
     }
@@ -189,6 +190,10 @@ void MediaSiteDownloder::on_tasklist_itemDoubleClicked(QListWidgetItem* item)
         media_path = tasksettings.value("media_path","null").toString();
         ui->date_added->setText(tasksettings.value("creation_date","null").toString());
         ui->pages_crawled->setText(QString::number(taskdb.count_crawld()));
+        int media_left = taskdb.count_media();
+        ui->mediadowned->setText(QString::number(media_left));
+        if(media_left>0)
+                update_media_list();
         ui->main_info->setEnabled(true);
 
     }
@@ -207,7 +212,6 @@ void MediaSiteDownloder::on_startscan_clicked()
     timer.start(1000);
     site.start();
     ui->mainToolBar->setEnabled(false);
-    //   site.nam->moveToThread(site.thread());
     connect(&site, SIGNAL(page_parsed(QStringList,QStringList,QString)),this,SLOT(save_page_parsed(QStringList,QStringList,QString)));
     parsing =  true;
     site.siteurl.setUrl(ui->task_url->text(),QUrl::TolerantMode);
@@ -226,7 +230,7 @@ void MediaSiteDownloder::save_page_parsed(QStringList links, QStringList media,Q
         if(media.count()>0)
         {
             taskdb.add_media(media,page_index);
-            taskdb.media_files();
+            update_media_list();
             ui->media_num->setText(QString::number(taskdb.count_media()));
         }
         taskdb.add_page(links);
@@ -247,6 +251,12 @@ void MediaSiteDownloder::save_page_parsed(QStringList links, QStringList media,Q
     }
 
 }
+
+void MediaSiteDownloder::update_media_list()
+{
+    taskdb.media_files();
+}
+
 void MediaSiteDownloder::updateDisplay()
 {
     int secs = time.elapsed() / 1000;

@@ -155,7 +155,7 @@ int TaskDB::count_left()
 int TaskDB::count_media()
 {
     QSqlQuery sql;
-    sql.exec("select count(*) from media where downloaded = 0");
+    sql.exec("select count(*) from media where downloaded = 1");
     if(sql.next())
         return sql.value(0).toInt();
     return -1;

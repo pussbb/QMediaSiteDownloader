@@ -24,8 +24,9 @@ public:
     QStringList links;
     QStringList media;
     void run();
+    QUrl siteurl;
 private:
-    QString siteurl;
+
 private slots:
     void get_page(QUrl url);
     void parse_page(QString content);

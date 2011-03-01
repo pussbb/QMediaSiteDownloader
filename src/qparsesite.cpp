@@ -55,22 +55,60 @@ void QParseSite::parse_page(QString content)
         }
         list.removeDuplicates();
         media=list.filter(".mp3");
+        links.clear();
         links=list.replaceInStrings(QRegExp(".*.mp3"),"_");
+        links=list.replaceInStrings(QRegExp(".*.m3u"),"_");
+        links=list.replaceInStrings(QRegExp("javascript:;"),"_");
+
         links.removeDuplicates();
-        QUrl link;
+        QUrl link("");
         int iternal ;
+        QString url;
         for( int n = 0; n < links.size(); n++)
         {
             link.setUrl(links.at( n));
-            iternal =links.at( n).indexOf("/");
-            if(siteurl != link.host() && iternal!=0 && links.at(n)!="_")
-                links.removeAt(n);
-            if(iternal==0)
+            iternal =links.at(n).indexOf("/");
+            if(siteurl.host() != link.host())
             {
-                links.replace(n,"http://"+siteurl+links.at(n));
+                if(iternal==1 || iternal==0)
+                {
+                    url = links.at(n);
+                    if(iternal == 1)
+                    {
+                        url=url.replace("./","/");
+                    }
+
+                    /*
+                    if(link.host()=="")
+                    {
+                        ///url = links.at(n);
+                        if(url_current.toString().lastIndexOf("/") == url_current.toString().size()-1 &&  url.at(0)=='/')
+                        {
+                            url.replace(0,1,"");
+                        }
+                        url=url_current.toString()+url;
+                    }
+                    else
+                          {
+                              */
+                              url = siteurl.scheme()+"://"+siteurl.host()+url;
+
+
+
+                    links.replace(n,url);
+                }
+                else
+                {
+                    links.removeAt(n);
+                    qDebug()<<link.host();
+                }
+
             }
+
+
+
         }
-        emit page_parsed(links,media,"");
+        emit page_parsed(links.filter(siteurl.host()),media,"");
     }
 
 
@@ -80,13 +118,13 @@ void QParseSite::parseSite(QString url = "")
 {
     media.clear();
     links.clear();
-    url_current.setUrl(url);
-   get_page(url_current);
+    url_current.setUrl(url,QUrl::TolerantMode);
+    get_page(url_current);
 }
 void QParseSite::run()
 {
-  //  nam->moveToThread(this);
- ///       connect(nam, SIGNAL(finished(QNetworkReply*)), SLOT(finishedSlot(QNetworkReply*)));
+    //  nam->moveToThread(this);
+    ///       connect(nam, SIGNAL(finished(QNetworkReply*)), SLOT(finishedSlot(QNetworkReply*)));
 
 }
 
@@ -94,8 +132,6 @@ void QParseSite::get_page(QUrl url)
 {
     if(url.scheme()=="http" || url.scheme()=="https" || url.scheme()=="ftp")
     {
-        siteurl = url.host();
-
         nam->get(QNetworkRequest(url));
     }
     else

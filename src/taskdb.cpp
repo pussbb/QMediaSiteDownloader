@@ -166,7 +166,7 @@ void TaskDB::media_files()
     sql.exec("select * from media");
     while(sql.next())
     {
-          qDebug() <<"url" << ": " << sql.value(1) <<"down:"<<sql.value(3)<< endl;
+    //      qDebug() <<"url" << ": " << sql.value(1) <<"down:"<<sql.value(3)<< endl;
     }
 
 

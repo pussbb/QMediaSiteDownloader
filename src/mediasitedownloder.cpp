@@ -210,6 +210,7 @@ void MediaSiteDownloder::on_startscan_clicked()
     //   site.nam->moveToThread(site.thread());
     connect(&site, SIGNAL(page_parsed(QStringList,QStringList,QString)),this,SLOT(save_page_parsed(QStringList,QStringList,QString)));
     parsing =  true;
+    site.siteurl.setUrl(ui->task_url->text(),QUrl::TolerantMode);
     site.parseSite(ui->task_url->text());
     ///  site.run();
 }
@@ -228,9 +229,7 @@ void MediaSiteDownloder::save_page_parsed(QStringList links, QStringList media,Q
             taskdb.media_files();
             ui->media_num->setText(QString::number(taskdb.count_media()));
         }
-        qDebug()<<"starting saving to db"<<time.elapsed();
         taskdb.add_page(links);
-        qDebug()<<"end saving to db"<<time.elapsed();;
         ui->numder_checked->setText(QString::number(taskdb.count_crawld()));
         ui->left_num->setText(QString::number(taskdb.count_left()));
     }

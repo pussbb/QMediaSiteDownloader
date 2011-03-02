@@ -119,14 +119,14 @@ void TaskDB::add_media(QStringList list, int parent)
 void TaskDB::set_page_parsed(int id,int val, QString error)
 {
     QSqlQuery sql;
-     error.replace("'","\"");
+     error.replace("'","\"\"");
     sql.exec("UPDATE pages SET parsed="+QString::number(val)+", error_str='"+error+"' WHERE id="+QString::number(id)+";");
 }
 void TaskDB::set_page_parsed(int id,int val,QString content, QString error)
 {
     QSqlQuery sql;
     content.replace("'","\"\"");
-    error.replace("'","\"");
+    error.replace("'","\"\"");
     sql.exec("UPDATE pages SET parsed="+QString::number(val)+",content='"+content+"', error_str='"+error+"' WHERE id="+QString::number(id)+";");
 }
 
@@ -177,4 +177,18 @@ void TaskDB::media_files()
     }
 
 
+}
+
+QStringList TaskDB::pages_with_error()
+{
+    QSqlQuery sql;
+    sql.exec("SELECT error_str FROM pages WHERE parsed = 2");
+    QStringList list;
+    if(sql.lastError().isValid())
+        return list<<"Error occurred while fetching results?";
+    while(sql.next())
+    {
+        list<<sql.value(0).toString();
+    }
+    return list;
 }

@@ -57,6 +57,8 @@ private slots:
     void on_startscan_clicked();
     void updateDisplay();
 
+    void on_pushButton_clicked();
+
 private:
     bool parsing;
     Ui::MediaSiteDownloder *ui;

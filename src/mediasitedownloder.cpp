@@ -274,3 +274,12 @@ void MediaSiteDownloder::handleLogMessage(QString msg)
     ui->log->addItem(QDateTime::currentDateTime ().toString()+"  "+msg);
 }
 
+#include "headers/errorlogui.h"
+void MediaSiteDownloder::on_pushButton_clicked()
+{
+    ErrorLogUi* logui = new ErrorLogUi(this);
+    logui->build_list(taskdb.pages_with_error());
+    logui->exec();
+
+    delete logui;
+}

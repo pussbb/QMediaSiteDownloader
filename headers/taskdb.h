@@ -25,6 +25,7 @@ public:
     QString get_next_page();
     void set_page_parsed(int id,int val = 1 ,QString error = "");
     void set_page_parsed(int id,int val = 1,QString content = "", QString error = "");
+    QStringList pages_with_error();
     int count_crawld();
     int count_left();
     int count_media();

@@ -23,7 +23,11 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Error journal</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../resource/qmsd_main.qrc">
+    <normaloff>:/main.png</normaloff>:/main.png</iconset>
   </property>
   <widget class="QPushButton" name="closeuilog">
    <property name="geometry">
@@ -49,6 +53,8 @@
    </property>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="../resource/qmsd_main.qrc"/>
+ </resources>
  <connections/>
 </ui>

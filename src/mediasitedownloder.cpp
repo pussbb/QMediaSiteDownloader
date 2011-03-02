@@ -223,7 +223,7 @@ void MediaSiteDownloder::on_startscan_clicked()
 void MediaSiteDownloder::save_page_parsed(QStringList links, QStringList media,QString content,QString msg)
 {
     parsing = false;
-    ui->curent_cheking->setText(" Saving ..."+ui->curent_cheking->text());
+    ui->curent_cheking->setText(tr(" Saving ...")+ui->curent_cheking->text());
     if(msg.isEmpty())
     {
         taskdb.set_page_parsed(page_index,1,content,"");

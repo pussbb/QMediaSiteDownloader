@@ -28,7 +28,6 @@ void QParseSite::finishedSlot(QNetworkReply* reply)
     // Some http error receivethis
     else
     {
-        qDebug()<<reply->error();
         emit page_parsed(links,media,"",QDateTime::currentDateTime ().toString()+"  "+reply->errorString());
         // hanthisle errors here
     }
@@ -135,7 +134,7 @@ void QParseSite::get_page(QUrl url)
     }
     else
     {
-        emit page_parsed(links,media,"",QDateTime::currentDateTime ().toString()+"  "+"Wrong url address "+url.toString());
+        emit page_parsed(links,media,"",QDateTime::currentDateTime ().toString()+"  "+tr("Wrong url address ")+url.toString());
     }
 
 }

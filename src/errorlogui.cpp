@@ -21,7 +21,7 @@ void ErrorLogUi::build_list(QStringList list)
     }
     else
     {
-        ui->errrolist->addItem("There is no errors.");
+        ui->errrolist->addItem(tr("There is no errors."));
     }
 }
 

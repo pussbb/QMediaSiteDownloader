@@ -185,7 +185,7 @@ QStringList TaskDB::pages_with_error()
     sql.exec("SELECT error_str FROM pages WHERE parsed = 2");
     QStringList list;
     if(sql.lastError().isValid())
-        return list<<"Error occurred while fetching results?";
+        return list<<tr("Error occurred while fetching results?");
     while(sql.next())
     {
         list<<sql.value(0).toString();

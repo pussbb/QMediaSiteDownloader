@@ -29,7 +29,7 @@ void QParseSite::finishedSlot(QNetworkReply* reply)
     else
     {
         qDebug()<<reply->error();
-        emit page_parsed(links,media,QDateTime::currentDateTime ().toString()+"  "+reply->errorString());
+        emit page_parsed(links,media,"",QDateTime::currentDateTime ().toString()+"  "+reply->errorString());
         // hanthisle errors here
     }
 
@@ -107,7 +107,7 @@ void QParseSite::parse_page(QString content)
 
 
         }
-        emit page_parsed(links.filter(siteurl.host()),media,"");
+        emit page_parsed(links.filter(siteurl.host()),media,content,"");
     }
 
 
@@ -135,7 +135,7 @@ void QParseSite::get_page(QUrl url)
     }
     else
     {
-        emit page_parsed(links,media,QDateTime::currentDateTime ().toString()+"  "+"Wrong url address "+url.toString());
+        emit page_parsed(links,media,"",QDateTime::currentDateTime ().toString()+"  "+"Wrong url address "+url.toString());
     }
 
 }

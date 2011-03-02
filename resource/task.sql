@@ -5,6 +5,8 @@ PRAGMA journal_mode =  MEMORY;
 CREATE TABLE pages (
   id INTEGER PRIMARY KEY,
   url TEXT UNIQUE,
+  content TEXT ,
+  error_str TEXT ,
   parsed NUMERIC
 );
 

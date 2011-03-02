@@ -212,7 +212,7 @@ void MediaSiteDownloder::on_startscan_clicked()
     timer.start(1000);
     site.start();
     ui->mainToolBar->setEnabled(false);
-    connect(&site, SIGNAL(page_parsed(QStringList,QStringList,QString)),this,SLOT(save_page_parsed(QStringList,QStringList,QString)));
+    connect(&site, SIGNAL(page_parsed(QStringList,QStringList,QString,QString)),this,SLOT(save_page_parsed(QStringList,QStringList,QString,QString)));
     parsing =  true;
     site.siteurl.setUrl(ui->task_url->text(),QUrl::TolerantMode);
     site.parseSite(ui->task_url->text());
@@ -220,13 +220,13 @@ void MediaSiteDownloder::on_startscan_clicked()
 }
 
 
-void MediaSiteDownloder::save_page_parsed(QStringList links, QStringList media,QString msg)
+void MediaSiteDownloder::save_page_parsed(QStringList links, QStringList media,QString content,QString msg)
 {
     parsing = false;
     ui->curent_cheking->setText(" Saving ..."+ui->curent_cheking->text());
     if(msg.isEmpty())
     {
-        taskdb.set_page_parsed(page_index);
+        taskdb.set_page_parsed(page_index,1,content,"");
         if(media.count()>0)
         {
             taskdb.add_media(media,page_index);
@@ -238,7 +238,7 @@ void MediaSiteDownloder::save_page_parsed(QStringList links, QStringList media,Q
         ui->left_num->setText(QString::number(taskdb.count_left()));
     }
     else{
-        taskdb.set_page_parsed(page_index,2);
+        taskdb.set_page_parsed((int)page_index, 2,"" ,msg);
         ui->log->addItem(msg);
     }
     QString page = taskdb.get_next_page();

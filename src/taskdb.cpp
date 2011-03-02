@@ -116,11 +116,18 @@ void TaskDB::add_media(QStringList list, int parent)
     }
 }
 
-void TaskDB::set_page_parsed(int id,int val)
+void TaskDB::set_page_parsed(int id,int val, QString error)
 {
     QSqlQuery sql;
-    sql.exec("UPDATE pages SET parsed="+QString::number(val)+" WHERE id="+QString::number(id)+";");
-   /// qDebug()<<sql.lastError().text();
+     error.replace("'","\"");
+    sql.exec("UPDATE pages SET parsed="+QString::number(val)+", error_str='"+error+"' WHERE id="+QString::number(id)+";");
+}
+void TaskDB::set_page_parsed(int id,int val,QString content, QString error)
+{
+    QSqlQuery sql;
+    content.replace("'","\"\"");
+    error.replace("'","\"");
+    sql.exec("UPDATE pages SET parsed="+QString::number(val)+",content='"+content+"', error_str='"+error+"' WHERE id="+QString::number(id)+";");
 }
 
 QString TaskDB::get_next_page()

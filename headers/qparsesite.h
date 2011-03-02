@@ -31,7 +31,7 @@ private slots:
     void get_page(QUrl url);
     void parse_page(QString content);
 signals:
-    void page_parsed(QStringList slinks,QStringList smedia,QString msg);
+    void page_parsed(QStringList slinks,QStringList smedia,QString content,QString msg);
 
 public slots:
 

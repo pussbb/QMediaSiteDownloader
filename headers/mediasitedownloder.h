@@ -43,7 +43,7 @@ protected:
     void changeEvent(QEvent *e);
 public slots:
     void handleLogMessage(QString msg);
-    void save_page_parsed(QStringList links,QStringList media,QString msg);
+    void save_page_parsed(QStringList links,QStringList media,QString content,QString msg);
 private slots:
     void update_media_list();
     void init_app();

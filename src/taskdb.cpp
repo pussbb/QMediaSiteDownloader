@@ -159,7 +159,7 @@ int TaskDB::count_left()
         return sql.value(0).toInt();
     return -1;
 }
-int TaskDB::count_media()
+int TaskDB::count_media_downed()
 {
     QSqlQuery sql;
     sql.exec("select count(*) from media where downloaded = 1");
@@ -167,16 +167,32 @@ int TaskDB::count_media()
         return sql.value(0).toInt();
     return -1;
 }
-void TaskDB::media_files()
+int TaskDB::count_media()
 {
     QSqlQuery sql;
-    sql.exec("select * from media");
+    sql.exec("select count(*) from media");
+    if(sql.next())
+        return sql.value(0).toInt();
+    return -1;
+}
+QMap<QString,QMap<QString,QString> > TaskDB::media_files()
+{
+    QMap<QString,QMap<QString,QString> > media;
+    QSqlQuery sql;
+    sql.exec("SELECT pages.id, pages.url , media.id ,media.url,media.downloaded FROM media INNER JOIN pages ON media.from_page = pages.id");
+    QFileInfo file;
     while(sql.next())
     {
-    //      qDebug() <<"url" << ": " << sql.value(1) <<"down:"<<sql.value(3)<< endl;
+        QMap<QString,QString> details;
+        details.insert("page_id",sql.value(0).toString());
+        details.insert("page_url",sql.value(1).toString());
+        details.insert("id",sql.value(2).toString());
+        details.insert("url",sql.value(3).toString());
+        details.insert("downed",sql.value(4).toString());
+        file.setFile(sql.value(3).toString());
+        media.insert(file.fileName(),details);
     }
-
-
+    return media;
 }
 
 QStringList TaskDB::pages_with_error()

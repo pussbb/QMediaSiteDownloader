@@ -21,7 +21,7 @@ public:
     bool page_exists(QString page);
     int page_index;
     int page_parsed;
-    void media_files();
+    QMap<QString,QMap<QString,QString> > media_files();
     QString get_next_page();
     void set_page_parsed(int id,int val = 1 ,QString error = "");
     void set_page_parsed(int id,int val = 1,QString content = "", QString error = "");
@@ -29,6 +29,7 @@ public:
     int count_crawld();
     int count_left();
     int count_media();
+    int count_media_downed();
 signals:
     void dblog(QString msg);
 private:

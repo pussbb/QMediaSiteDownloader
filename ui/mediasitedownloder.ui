@@ -219,7 +219,7 @@
          </property>
          <property name="geometry">
           <rect>
-           <x>26</x>
+           <x>16</x>
            <y>304</y>
            <width>78</width>
            <height>25</height>
@@ -232,14 +232,14 @@
         <widget class="QPushButton" name="startscan">
          <property name="geometry">
           <rect>
-           <x>148</x>
+           <x>224</x>
            <y>304</y>
-           <width>78</width>
+           <width>95</width>
            <height>25</height>
           </rect>
          </property>
          <property name="text">
-          <string>Start</string>
+          <string>Start Scan</string>
          </property>
         </widget>
         <widget class="QLabel" name="task_url">
@@ -268,12 +268,25 @@
           <string>View Error Log</string>
          </property>
         </widget>
+        <widget class="QPushButton" name="viewMediaList">
+         <property name="geometry">
+          <rect>
+           <x>109</x>
+           <y>304</y>
+           <width>101</width>
+           <height>25</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Media List</string>
+         </property>
+        </widget>
        </widget>
       </widget>
       <widget class="QWidget" name="parse_info">
        <layout class="QGridLayout" name="gridLayout_3">
         <item row="0" column="1">
-         <widget class="QTabWidget" name="tabWidget">
+         <widget class="QTabWidget" name="tasktabs">
           <property name="currentIndex">
            <number>0</number>
           </property>
@@ -343,11 +356,14 @@
            <widget class="QLabel" name="numder_checked">
             <property name="geometry">
              <rect>
-              <x>122</x>
+              <x>114</x>
               <y>30</y>
               <width>113</width>
               <height>16</height>
              </rect>
+            </property>
+            <property name="text">
+             <string>0</string>
             </property>
            </widget>
            <widget class="QLabel" name="label_7">
@@ -372,6 +388,9 @@
               <height>16</height>
              </rect>
             </property>
+            <property name="text">
+             <string>0</string>
+            </property>
            </widget>
            <widget class="QLabel" name="label_8">
             <property name="geometry">
@@ -394,6 +413,9 @@
               <width>141</width>
               <height>16</height>
              </rect>
+            </property>
+            <property name="text">
+             <string>0</string>
             </property>
            </widget>
            <widget class="QLabel" name="label_9">
@@ -501,7 +523,20 @@
              </widget>
             </item>
             <item row="1" column="0">
-             <widget class="QListView" name="medialist"/>
+             <widget class="QListWidget" name="medialist">
+              <property name="dragDropMode">
+               <enum>QAbstractItemView::DragDrop</enum>
+              </property>
+              <property name="defaultDropAction">
+               <enum>Qt::MoveAction</enum>
+              </property>
+              <property name="selectionMode">
+               <enum>QAbstractItemView::MultiSelection</enum>
+              </property>
+              <property name="sortingEnabled">
+               <bool>true</bool>
+              </property>
+             </widget>
             </item>
            </layout>
           </widget>

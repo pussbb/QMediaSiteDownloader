@@ -190,9 +190,9 @@ void MediaSiteDownloder::on_tasklist_itemDoubleClicked(QListWidgetItem* item)
         media_path = tasksettings.value("media_path","null").toString();
         ui->date_added->setText(tasksettings.value("creation_date","null").toString());
         ui->pages_crawled->setText(QString::number(taskdb.count_crawld()));
-        int media_left = taskdb.count_media();
-        ui->mediadowned->setText(QString::number(media_left));
-        if(media_left>0)
+        ui->mediadowned->setText(QString::number(taskdb.count_media_downed()));
+
+        if(taskdb.count_media()>0)
                 update_media_list();
         ui->main_info->setEnabled(true);
 
@@ -200,10 +200,9 @@ void MediaSiteDownloder::on_tasklist_itemDoubleClicked(QListWidgetItem* item)
 }
 void MediaSiteDownloder::on_startscan_clicked()
 {
-    qDebug()<<this->thread();
     ui->index->hide();
     ui->parse_info->show();
-    ///site = new QParseSite();
+    ui->tasktabs->setCurrentIndex(0);
     page_index=taskdb.add_page(ui->task_url->text());
     ui->curent_cheking->setText(ui->task_url->text());
     time.start();
@@ -226,7 +225,7 @@ void MediaSiteDownloder::save_page_parsed(QStringList links, QStringList media,Q
     ui->curent_cheking->setText(tr(" Saving ...")+ui->curent_cheking->text());
     if(msg.isEmpty())
     {
-        taskdb.set_page_parsed(page_index,1,content,"");
+        taskdb.set_page_parsed(page_index,1,"","");//content
         if(media.count()>0)
         {
             taskdb.add_media(media,page_index);
@@ -254,7 +253,18 @@ void MediaSiteDownloder::save_page_parsed(QStringList links, QStringList media,Q
 
 void MediaSiteDownloder::update_media_list()
 {
-    taskdb.media_files();
+    media_map.clear();
+    media_map=taskdb.media_files();
+    QMapIterator<QString,QMap<QString,QString> > i(media_map);
+    while (i.hasNext()) {
+         i.next();
+         QListWidgetItem* item = new QListWidgetItem();//(i.key());
+item->setText(i.key());
+        /// item.setData(Qt::UserRole,m);
+         item->setSelected(true);
+         ui->medialist->insertItem(0,i.key());
+         qDebug() << i.key() << ": " << i.value() << endl;
+     }
 }
 
 void MediaSiteDownloder::updateDisplay()
@@ -280,6 +290,12 @@ void MediaSiteDownloder::on_pushButton_clicked()
     ErrorLogUi* logui = new ErrorLogUi(this);
     logui->build_list(taskdb.pages_with_error());
     logui->exec();
-
     delete logui;
+}
+
+void MediaSiteDownloder::on_viewMediaList_clicked()
+{
+    ui->index->hide();
+    ui->parse_info->show();
+    ui->tasktabs->setCurrentIndex(1);
 }

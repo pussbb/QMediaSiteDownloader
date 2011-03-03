@@ -13,6 +13,7 @@
 #include "headers/qparsesite.h"
 #include <QTime>
 #include <QTimer>
+#include <QMap>
 ///
 #include <QDebug>
 ///
@@ -39,6 +40,7 @@ public:
     QString media_path;
     QTime time;
     QTimer timer;
+    QMap<QString,QMap<QString,QString> > media_map;
 protected:
     void changeEvent(QEvent *e);
 public slots:
@@ -59,7 +61,10 @@ private slots:
 
     void on_pushButton_clicked();
 
+    void on_viewMediaList_clicked();
+
 private:
+
     bool parsing;
     Ui::MediaSiteDownloder *ui;
 };

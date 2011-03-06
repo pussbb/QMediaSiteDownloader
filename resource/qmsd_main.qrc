@@ -2,6 +2,7 @@
     <qresource prefix="/menu">
         <file alias="exit">gtranslator.png</file>
         <file>Symbol-Delete.png</file>
+        <file>task_listpng</file>
     </qresource>
     <qresource prefix="/toolbar">
         <file>Arrow-Down.png</file>

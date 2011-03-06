@@ -200,6 +200,8 @@ void MediaSiteDownloder::on_tasklist_itemDoubleClicked(QListWidgetItem* item)
 }
 void MediaSiteDownloder::on_startscan_clicked()
 {
+
+    ui->actionTask_List->setEnabled(true);
     ui->index->hide();
     ui->parse_info->show();
     ui->tasktabs->setCurrentIndex(0);
@@ -295,7 +297,17 @@ void MediaSiteDownloder::on_pushButton_clicked()
 
 void MediaSiteDownloder::on_viewMediaList_clicked()
 {
+    ui->actionTask_List->setEnabled(true);
     ui->index->hide();
     ui->parse_info->show();
     ui->tasktabs->setCurrentIndex(1);
+}
+
+void MediaSiteDownloder::on_actionTask_List_triggered()
+{
+        ui->actionTask_List->setEnabled(false);
+
+        ui->parse_info->hide();
+        parsing = false;
+        ui->index->show();
 }

@@ -63,6 +63,8 @@ private slots:
 
     void on_viewMediaList_clicked();
 
+    void on_actionTask_List_triggered();
+
 private:
 
     bool parsing;

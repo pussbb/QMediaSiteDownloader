@@ -288,7 +288,7 @@
         <item row="0" column="1">
          <widget class="QTabWidget" name="tasktabs">
           <property name="currentIndex">
-           <number>0</number>
+           <number>1</number>
           </property>
           <widget class="QWidget" name="tab">
            <attribute name="title">
@@ -531,7 +531,7 @@
                <enum>Qt::MoveAction</enum>
               </property>
               <property name="selectionMode">
-               <enum>QAbstractItemView::MultiSelection</enum>
+               <enum>QAbstractItemView::SingleSelection</enum>
               </property>
               <property name="sortingEnabled">
                <bool>true</bool>
@@ -589,6 +589,8 @@
    </attribute>
    <addaction name="actionNew_Task"/>
    <addaction name="actionRemove_Task"/>
+   <addaction name="separator"/>
+   <addaction name="actionTask_List"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionExit">
@@ -629,6 +631,18 @@
    </property>
    <property name="text">
     <string>Remove Task</string>
+   </property>
+  </action>
+  <action name="actionTask_List">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="../resource/qmsd_main.qrc">
+     <normaloff>:/menu/task_listpng</normaloff>:/menu/task_listpng</iconset>
+   </property>
+   <property name="text">
+    <string>Task List</string>
    </property>
   </action>
  </widget>

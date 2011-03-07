@@ -22,6 +22,7 @@ MediaSiteDownloder::MediaSiteDownloder(QWidget *parent) :
         }
     }
     taskdb.setFolder(taskdir);
+
     init_app();
 }
 void MediaSiteDownloder::init_app()
@@ -61,7 +62,7 @@ void MediaSiteDownloder::on_actionExit_triggered()
     }
     else
     {
-      exit(0);
+        exit(0);
     }
 
 }
@@ -193,7 +194,7 @@ void MediaSiteDownloder::on_tasklist_itemDoubleClicked(QListWidgetItem* item)
         ui->mediadowned->setText(QString::number(taskdb.count_media_downed()));
 
         if(taskdb.count_media()>0)
-                update_media_list();
+            update_media_list();
         ui->main_info->setEnabled(true);
 
     }
@@ -256,17 +257,30 @@ void MediaSiteDownloder::save_page_parsed(QStringList links, QStringList media,Q
 void MediaSiteDownloder::update_media_list()
 {
     media_map.clear();
+    ui->medialist->clear();
     media_map=taskdb.media_files();
     QMapIterator<QString,QMap<QString,QString> > i(media_map);
+    QString text;
     while (i.hasNext()) {
-         i.next();
-         QListWidgetItem* item = new QListWidgetItem();//(i.key());
-item->setText(i.key());
-        /// item.setData(Qt::UserRole,m);
-         item->setSelected(true);
-         ui->medialist->insertItem(0,i.key());
-         qDebug() << i.key() << ": " << i.value() << endl;
-     }
+        i.next();
+        QListWidgetItem* item = new QListWidgetItem();//(i.key());
+        text =  i.key().toLocal8Bit();
+        item->setText(text);
+        item->setData(Qt::UserRole,i.key());
+        item->setCheckState(Qt::Checked);
+        if(i.value()["downed"].toInt() == 0)
+        {
+            item->setIcon(QIcon(":/toolbar/Symbol-Error.png"));
+            qDebug()<<item->icon();
+        }
+        else
+        {
+            item->setIcon(QIcon(":/downd"));
+        }
+        item->setSelected(true);
+        ui->medialist->insertItem(0,item);
+        qDebug() << i.key() << ": " << i.value() << endl;
+    }
 }
 
 void MediaSiteDownloder::updateDisplay()
@@ -305,9 +319,90 @@ void MediaSiteDownloder::on_viewMediaList_clicked()
 
 void MediaSiteDownloder::on_actionTask_List_triggered()
 {
-        ui->actionTask_List->setEnabled(false);
+    ui->actionTask_List->setEnabled(false);
+    ui->parse_info->hide();
+    parsing = false;
+    ui->index->show();
+}
 
-        ui->parse_info->hide();
-        parsing = false;
-        ui->index->show();
+void MediaSiteDownloder::on_medialist_customContextMenuRequested(QPoint pos)
+{
+    if(ui->medialist->currentIndex().isValid() && ui->medialist->currentItem()->isSelected()){
+        QMenu *m=new QMenu();
+        pos.setX(pos.x()-5);
+        pos.setY(pos.y()+5);
+        m->addAction(ui->actionGo_to_Page);
+        m->addAction(ui->actionCopy_to_Clipboard);
+        m->exec(ui->medialist->mapToGlobal(pos));
+    }
+}
+
+void MediaSiteDownloder::on_actionMedia_Up_triggered()
+{
+    if(ui->medialist->currentIndex().isValid() && ui->medialist->currentItem()->isSelected()){
+
+        QListWidgetItem *current = ui->medialist->currentItem();
+        int currIndex = ui->medialist->row(current);
+
+        QListWidgetItem *prev =ui->medialist->item(ui->medialist->row(current) - 1);
+        int prevIndex = ui->medialist->row(prev);
+
+        QListWidgetItem *temp = ui->medialist->takeItem(prevIndex);
+        ui->medialist->insertItem(prevIndex, current);
+        ui->medialist->insertItem(currIndex, temp);
+    }
+}
+
+void MediaSiteDownloder::on_actionShow_Errors_triggered()
+{
+    ErrorLogUi* logui = new ErrorLogUi(this);
+    logui->build_list(taskdb.pages_with_error());
+    logui->exec();
+    delete logui;
+}
+
+
+void MediaSiteDownloder::on_actionMedia_down_triggered()
+{
+    QListWidgetItem *current = ui->medialist->currentItem();
+    int currIndex = ui->medialist->row(current);
+    QListWidgetItem *next = ui->medialist->item(ui->medialist->row(current) + 1);
+    int nextIndex = ui->medialist->row(next);
+    QListWidgetItem *temp = ui->medialist->takeItem(nextIndex);
+
+    ui->medialist->insertItem(currIndex, temp);
+    ui->medialist->insertItem(nextIndex, current);
+}
+
+void MediaSiteDownloder::on_toolmediaup_clicked()
+{
+    this->on_actionMedia_Up_triggered();
+}
+
+void MediaSiteDownloder::on_toolmediadown_clicked()
+{
+    this->on_actionMedia_down_triggered();
+}
+
+void MediaSiteDownloder::on_actionRefresh_Media_List_triggered()
+{
+    update_media_list();
+}
+#include <QDesktopServices>
+void MediaSiteDownloder::on_actionGo_to_Page_triggered()
+{
+    if(ui->medialist->currentIndex().isValid() && ui->medialist->currentItem()->isSelected()){
+    QDesktopServices::openUrl(QUrl(media_map[ui->medialist->currentItem()->data(Qt::UserRole).toString()]["page_url"], QUrl::TolerantMode));
+    }
+
+}
+#include "QClipboard"
+void MediaSiteDownloder::on_actionCopy_to_Clipboard_triggered()
+{
+
+        if(ui->medialist->currentIndex().isValid() && ui->medialist->currentItem()->isSelected()){
+            QClipboard *clipboard = QApplication::clipboard();
+        clipboard->setText(media_map[ui->medialist->currentItem()->data(Qt::UserRole).toString()]["url"]);
+        }
+
 }

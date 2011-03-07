@@ -65,6 +65,24 @@ private slots:
 
     void on_actionTask_List_triggered();
 
+    void on_medialist_customContextMenuRequested(QPoint pos);
+
+    void on_actionMedia_Up_triggered();
+
+    void on_actionShow_Errors_triggered();
+
+    void on_actionMedia_down_triggered();
+
+    void on_toolmediaup_clicked();
+
+    void on_toolmediadown_clicked();
+
+    void on_actionRefresh_Media_List_triggered();
+
+    void on_actionGo_to_Page_triggered();
+
+    void on_actionCopy_to_Clipboard_triggered();
+
 private:
 
     bool parsing;

@@ -10,6 +10,18 @@
     <height>461</height>
    </rect>
   </property>
+  <property name="minimumSize">
+   <size>
+    <width>626</width>
+    <height>461</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>626</width>
+    <height>461</height>
+   </size>
+  </property>
   <property name="windowTitle">
    <string>Media Site Downloder</string>
   </property>
@@ -18,11 +30,8 @@
     <normaloff>:/main.png</normaloff>:/main.png</iconset>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QHBoxLayout" name="horizontalLayout">
-    <property name="margin">
-     <number>1</number>
-    </property>
-    <item>
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
        <number>0</number>
@@ -31,10 +40,10 @@
        <widget class="QListWidget" name="tasklist">
         <property name="geometry">
          <rect>
-          <x>6</x>
-          <y>6</y>
-          <width>213</width>
-          <height>363</height>
+          <x>9</x>
+          <y>9</y>
+          <width>256</width>
+          <height>343</height>
          </rect>
         </property>
         <property name="minimumSize">
@@ -55,16 +64,16 @@
         </property>
         <property name="geometry">
          <rect>
-          <x>241</x>
+          <x>271</x>
           <y>9</y>
-          <width>345</width>
-          <height>353</height>
+          <width>339</width>
+          <height>335</height>
          </rect>
         </property>
         <property name="minimumSize">
          <size>
-          <width>295</width>
-          <height>253</height>
+          <width>339</width>
+          <height>335</height>
          </size>
         </property>
         <widget class="QGroupBox" name="scantype">
@@ -259,7 +268,7 @@
          <property name="geometry">
           <rect>
            <x>14</x>
-           <y>240</y>
+           <y>244</y>
            <width>121</width>
            <height>25</height>
           </rect>
@@ -284,265 +293,334 @@
        </widget>
       </widget>
       <widget class="QWidget" name="parse_info">
-       <layout class="QGridLayout" name="gridLayout_3">
-        <item row="0" column="1">
-         <widget class="QTabWidget" name="tasktabs">
-          <property name="currentIndex">
-           <number>1</number>
+       <widget class="QTabWidget" name="tasktabs">
+        <property name="geometry">
+         <rect>
+          <x>9</x>
+          <y>9</y>
+          <width>590</width>
+          <height>363</height>
+         </rect>
+        </property>
+        <property name="currentIndex">
+         <number>1</number>
+        </property>
+        <widget class="QWidget" name="tab">
+         <attribute name="title">
+          <string>Log</string>
+         </attribute>
+         <widget class="QListWidget" name="log">
+          <property name="geometry">
+           <rect>
+            <x>2</x>
+            <y>98</y>
+            <width>595</width>
+            <height>229</height>
+           </rect>
           </property>
-          <widget class="QWidget" name="tab">
-           <attribute name="title">
-            <string>Log</string>
-           </attribute>
-           <widget class="QListWidget" name="log">
-            <property name="geometry">
-             <rect>
-              <x>2</x>
-              <y>98</y>
-              <width>595</width>
-              <height>229</height>
-             </rect>
-            </property>
-           </widget>
-           <widget class="QLabel" name="label_4">
-            <property name="geometry">
-             <rect>
-              <x>10</x>
-              <y>6</y>
-              <width>85</width>
-              <height>16</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>Checking</string>
-            </property>
-           </widget>
-           <widget class="QLabel" name="curent_cheking">
-            <property name="geometry">
-             <rect>
-              <x>104</x>
-              <y>6</y>
-              <width>459</width>
-              <height>16</height>
-             </rect>
-            </property>
-           </widget>
-           <widget class="QLabel" name="label_5">
-            <property name="geometry">
-             <rect>
-              <x>12</x>
-              <y>78</y>
-              <width>137</width>
-              <height>16</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>Erorr log</string>
-            </property>
-           </widget>
-           <widget class="QLabel" name="label_6">
-            <property name="geometry">
-             <rect>
-              <x>10</x>
-              <y>30</y>
-              <width>105</width>
-              <height>16</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>Checked</string>
-            </property>
-           </widget>
-           <widget class="QLabel" name="numder_checked">
-            <property name="geometry">
-             <rect>
-              <x>114</x>
-              <y>30</y>
-              <width>113</width>
-              <height>16</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>0</string>
-            </property>
-           </widget>
-           <widget class="QLabel" name="label_7">
-            <property name="geometry">
-             <rect>
-              <x>12</x>
-              <y>54</y>
-              <width>91</width>
-              <height>16</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>Left</string>
-            </property>
-           </widget>
-           <widget class="QLabel" name="left_num">
-            <property name="geometry">
-             <rect>
-              <x>114</x>
-              <y>52</y>
-              <width>163</width>
-              <height>16</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>0</string>
-            </property>
-           </widget>
-           <widget class="QLabel" name="label_8">
-            <property name="geometry">
-             <rect>
-              <x>282</x>
-              <y>32</y>
-              <width>109</width>
-              <height>16</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>Media found</string>
-            </property>
-           </widget>
-           <widget class="QLabel" name="media_num">
-            <property name="geometry">
-             <rect>
-              <x>410</x>
-              <y>32</y>
-              <width>141</width>
-              <height>16</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>0</string>
-            </property>
-           </widget>
-           <widget class="QLabel" name="label_9">
-            <property name="geometry">
-             <rect>
-              <x>282</x>
-              <y>54</y>
-              <width>56</width>
-              <height>15</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>Time</string>
-            </property>
-           </widget>
-           <widget class="QLabel" name="total_time">
-            <property name="geometry">
-             <rect>
-              <x>368</x>
-              <y>54</y>
-              <width>183</width>
-              <height>16</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-           </widget>
+         </widget>
+         <widget class="QLabel" name="label_4">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>6</y>
+            <width>85</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Checking</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="curent_cheking">
+          <property name="geometry">
+           <rect>
+            <x>104</x>
+            <y>6</y>
+            <width>459</width>
+            <height>16</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_5">
+          <property name="geometry">
+           <rect>
+            <x>12</x>
+            <y>78</y>
+            <width>137</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Erorr log</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_6">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>30</y>
+            <width>105</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Checked</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="numder_checked">
+          <property name="geometry">
+           <rect>
+            <x>114</x>
+            <y>30</y>
+            <width>113</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>0</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_7">
+          <property name="geometry">
+           <rect>
+            <x>12</x>
+            <y>54</y>
+            <width>91</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Left</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="left_num">
+          <property name="geometry">
+           <rect>
+            <x>114</x>
+            <y>52</y>
+            <width>163</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>0</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_8">
+          <property name="geometry">
+           <rect>
+            <x>282</x>
+            <y>32</y>
+            <width>109</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Media found</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="media_num">
+          <property name="geometry">
+           <rect>
+            <x>410</x>
+            <y>32</y>
+            <width>141</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>0</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_9">
+          <property name="geometry">
+           <rect>
+            <x>282</x>
+            <y>54</y>
+            <width>56</width>
+            <height>15</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Time</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="total_time">
+          <property name="geometry">
+           <rect>
+            <x>368</x>
+            <y>54</y>
+            <width>183</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </widget>
+        <widget class="QWidget" name="tab_2">
+         <attribute name="title">
+          <string>Media files</string>
+         </attribute>
+         <widget class="QGroupBox" name="groupBox">
+          <property name="geometry">
+           <rect>
+            <x>9</x>
+            <y>9</y>
+            <width>568</width>
+            <height>87</height>
+           </rect>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>547</width>
+            <height>87</height>
+           </size>
+          </property>
+          <property name="title">
+           <string>Downloading info</string>
+          </property>
+          <widget class="QLabel" name="label_10">
+           <property name="geometry">
+            <rect>
+             <x>12</x>
+             <y>20</y>
+             <width>99</width>
+             <height>16</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Current:</string>
+           </property>
           </widget>
-          <widget class="QWidget" name="tab_2">
-           <attribute name="title">
-            <string>Media files</string>
-           </attribute>
-           <layout class="QGridLayout" name="gridLayout_4">
-            <item row="0" column="0">
-             <widget class="QGroupBox" name="groupBox">
-              <property name="minimumSize">
-               <size>
-                <width>547</width>
-                <height>87</height>
-               </size>
-              </property>
-              <property name="title">
-               <string>Downloading info</string>
-              </property>
-              <widget class="QLabel" name="label_10">
-               <property name="geometry">
-                <rect>
-                 <x>12</x>
-                 <y>20</y>
-                 <width>99</width>
-                 <height>16</height>
-                </rect>
-               </property>
-               <property name="text">
-                <string>Current:</string>
-               </property>
-              </widget>
-              <widget class="QLabel" name="filename_media">
-               <property name="geometry">
-                <rect>
-                 <x>88</x>
-                 <y>20</y>
-                 <width>445</width>
-                 <height>16</height>
-                </rect>
-               </property>
-              </widget>
-              <widget class="QLabel" name="label_11">
-               <property name="geometry">
-                <rect>
-                 <x>12</x>
-                 <y>38</y>
-                 <width>63</width>
-                 <height>16</height>
-                </rect>
-               </property>
-               <property name="text">
-                <string>From</string>
-               </property>
-              </widget>
-              <widget class="QLabel" name="from_url_media">
-               <property name="geometry">
-                <rect>
-                 <x>76</x>
-                 <y>36</y>
-                 <width>471</width>
-                 <height>16</height>
-                </rect>
-               </property>
-              </widget>
-              <widget class="QProgressBar" name="progressBar">
-               <property name="geometry">
-                <rect>
-                 <x>16</x>
-                 <y>58</y>
-                 <width>515</width>
-                 <height>23</height>
-                </rect>
-               </property>
-               <property name="value">
-                <number>24</number>
-               </property>
-              </widget>
-             </widget>
-            </item>
-            <item row="1" column="0">
-             <widget class="QListWidget" name="medialist">
-              <property name="dragDropMode">
-               <enum>QAbstractItemView::DragDrop</enum>
-              </property>
-              <property name="defaultDropAction">
-               <enum>Qt::MoveAction</enum>
-              </property>
-              <property name="selectionMode">
-               <enum>QAbstractItemView::SingleSelection</enum>
-              </property>
-              <property name="sortingEnabled">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-           </layout>
+          <widget class="QLabel" name="filename_media">
+           <property name="geometry">
+            <rect>
+             <x>88</x>
+             <y>20</y>
+             <width>445</width>
+             <height>16</height>
+            </rect>
+           </property>
+          </widget>
+          <widget class="QLabel" name="label_11">
+           <property name="geometry">
+            <rect>
+             <x>12</x>
+             <y>38</y>
+             <width>63</width>
+             <height>16</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>From</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="from_url_media">
+           <property name="geometry">
+            <rect>
+             <x>76</x>
+             <y>36</y>
+             <width>471</width>
+             <height>16</height>
+            </rect>
+           </property>
+          </widget>
+          <widget class="QProgressBar" name="progressBar">
+           <property name="geometry">
+            <rect>
+             <x>16</x>
+             <y>58</y>
+             <width>515</width>
+             <height>23</height>
+            </rect>
+           </property>
+           <property name="value">
+            <number>24</number>
+           </property>
           </widget>
          </widget>
-        </item>
-       </layout>
+         <widget class="QListWidget" name="medialist">
+          <property name="geometry">
+           <rect>
+            <x>8</x>
+            <y>104</y>
+            <width>537</width>
+            <height>229</height>
+           </rect>
+          </property>
+          <property name="contextMenuPolicy">
+           <enum>Qt::CustomContextMenu</enum>
+          </property>
+          <property name="editTriggers">
+           <set>QAbstractItemView::DoubleClicked</set>
+          </property>
+          <property name="dragDropMode">
+           <enum>QAbstractItemView::DragDrop</enum>
+          </property>
+          <property name="defaultDropAction">
+           <enum>Qt::MoveAction</enum>
+          </property>
+          <property name="selectionMode">
+           <enum>QAbstractItemView::SingleSelection</enum>
+          </property>
+          <property name="isWrapping" stdset="0">
+           <bool>false</bool>
+          </property>
+          <property name="wordWrap">
+           <bool>false</bool>
+          </property>
+          <property name="sortingEnabled">
+           <bool>false</bool>
+          </property>
+          <item>
+           <property name="text">
+            <string>Новый элемент</string>
+           </property>
+           <property name="icon">
+            <iconset resource="../resource/qmsd_main.qrc">
+             <normaloff>:/toolbar/Symbol-Restricted.png</normaloff>:/toolbar/Symbol-Restricted.png</iconset>
+           </property>
+          </item>
+         </widget>
+         <widget class="QToolButton" name="toolmediaup">
+          <property name="geometry">
+           <rect>
+            <x>552</x>
+            <y>110</y>
+            <width>25</width>
+            <height>24</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>...</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../resource/qmsd_main.qrc">
+            <normaloff>:/toolbar/Arrow-Up.png</normaloff>:/toolbar/Arrow-Up.png</iconset>
+          </property>
+         </widget>
+         <widget class="QToolButton" name="toolmediadown">
+          <property name="geometry">
+           <rect>
+            <x>552</x>
+            <y>142</y>
+            <width>25</width>
+            <height>24</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>...</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../resource/qmsd_main.qrc">
+            <normaloff>:/toolbar/Arrow-Down.png</normaloff>:/toolbar/Arrow-Down.png</iconset>
+          </property>
+         </widget>
+        </widget>
+       </widget>
       </widget>
      </widget>
     </item>
@@ -591,8 +669,12 @@
    <addaction name="actionRemove_Task"/>
    <addaction name="separator"/>
    <addaction name="actionTask_List"/>
+   <addaction name="separator"/>
+   <addaction name="actionRefresh_Media_List"/>
+   <addaction name="actionShow_Errors"/>
+   <addaction name="actionMedia_down"/>
+   <addaction name="actionMedia_Up"/>
   </widget>
-  <widget class="QStatusBar" name="statusBar"/>
   <action name="actionExit">
    <property name="icon">
     <iconset resource="../resource/qmsd_main.qrc">
@@ -643,6 +725,60 @@
    </property>
    <property name="text">
     <string>Task List</string>
+   </property>
+  </action>
+  <action name="actionRefresh_Media_List">
+   <property name="icon">
+    <iconset resource="../resource/qmsd_main.qrc">
+     <normaloff>:/toolbar/Refresh.png</normaloff>:/toolbar/Refresh.png</iconset>
+   </property>
+   <property name="text">
+    <string>Refresh Media List</string>
+   </property>
+  </action>
+  <action name="actionShow_Errors">
+   <property name="icon">
+    <iconset resource="../resource/qmsd_main.qrc">
+     <normaloff>:/toolbar/error</normaloff>:/toolbar/error</iconset>
+   </property>
+   <property name="text">
+    <string>Show Errors</string>
+   </property>
+  </action>
+  <action name="actionMedia_down">
+   <property name="icon">
+    <iconset resource="../resource/qmsd_main.qrc">
+     <normaloff>:/toolbar/Arrow-Down.png</normaloff>:/toolbar/Arrow-Down.png</iconset>
+   </property>
+   <property name="text">
+    <string>Media Down</string>
+   </property>
+  </action>
+  <action name="actionMedia_Up">
+   <property name="icon">
+    <iconset resource="../resource/qmsd_main.qrc">
+     <normaloff>:/toolbar/Arrow-Up.png</normaloff>:/toolbar/Arrow-Up.png</iconset>
+   </property>
+   <property name="text">
+    <string>Media Up</string>
+   </property>
+  </action>
+  <action name="actionGo_to_Page">
+   <property name="icon">
+    <iconset resource="../resource/qmsd_main.qrc">
+     <normaloff>:/toolbar/link.png</normaloff>:/toolbar/link.png</iconset>
+   </property>
+   <property name="text">
+    <string>Go to Page</string>
+   </property>
+  </action>
+  <action name="actionCopy_to_Clipboard">
+   <property name="icon">
+    <iconset resource="../resource/qmsd_main.qrc">
+     <normaloff>:/toolbar/Paste.png</normaloff>:/toolbar/Paste.png</iconset>
+   </property>
+   <property name="text">
+    <string>Copy to Clipboard</string>
    </property>
   </action>
  </widget>

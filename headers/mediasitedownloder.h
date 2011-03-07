@@ -83,8 +83,10 @@ private slots:
 
     void on_actionCopy_to_Clipboard_triggered();
 
-private:
+    void on_actionRemove_Task_triggered();
 
+private:
+    bool stop;
     bool parsing;
     Ui::MediaSiteDownloder *ui;
 };

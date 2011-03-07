@@ -22,7 +22,7 @@ MediaSiteDownloder::MediaSiteDownloder(QWidget *parent) :
         }
     }
     taskdb.setFolder(taskdir);
-
+    stop = false;
     init_app();
 }
 void MediaSiteDownloder::init_app()
@@ -153,7 +153,7 @@ void MediaSiteDownloder::on_tasklist_customContextMenuRequested(QPoint pos)
     if(ui->tasklist->currentIndex().isValid() && ui->tasklist->currentItem()->isSelected()){
         QMenu *m=new QMenu();
         pos.setX(pos.x()-5);
-        pos.setY(pos.y()+25);
+        pos.setY(pos.y()+5);
         m->addAction(ui->actionRemove_Task);
         //m->addAction(ui->actionEdit);
         m->exec(ui->tasklist->mapToGlobal(pos));
@@ -201,8 +201,13 @@ void MediaSiteDownloder::on_tasklist_itemDoubleClicked(QListWidgetItem* item)
 }
 void MediaSiteDownloder::on_startscan_clicked()
 {
-
+    ui->actionRefresh_Media_List->setEnabled(true);
+    ui->actionMedia_down->setEnabled(true);
+    ui->actionMedia_Up->setEnabled(true);
+    ui->actionShow_Errors->setEnabled(true);
     ui->actionTask_List->setEnabled(true);
+    ui->actionNew_Task->setEnabled(false);
+    ui->actionRemove_Task->setEnabled(false);
     ui->index->hide();
     ui->parse_info->show();
     ui->tasktabs->setCurrentIndex(0);
@@ -213,7 +218,6 @@ void MediaSiteDownloder::on_startscan_clicked()
     connect(&timer, SIGNAL(timeout()), this, SLOT(updateDisplay()));
     timer.start(1000);
     site.start();
-    ui->mainToolBar->setEnabled(false);
     connect(&site, SIGNAL(page_parsed(QStringList,QStringList,QString,QString)),this,SLOT(save_page_parsed(QStringList,QStringList,QString,QString)));
     parsing =  true;
     site.siteurl.setUrl(ui->task_url->text(),QUrl::TolerantMode);
@@ -225,6 +229,7 @@ void MediaSiteDownloder::on_startscan_clicked()
 void MediaSiteDownloder::save_page_parsed(QStringList links, QStringList media,QString content,QString msg)
 {
     parsing = false;
+    Q_UNUSED(content);
     ui->curent_cheking->setText(tr(" Saving ...")+ui->curent_cheking->text());
     if(msg.isEmpty())
     {
@@ -243,13 +248,22 @@ void MediaSiteDownloder::save_page_parsed(QStringList links, QStringList media,Q
         taskdb.set_page_parsed((int)page_index, 2,"" ,msg);
         ui->log->addItem(msg);
     }
-    QString page = taskdb.get_next_page();
-    if(!page.isEmpty())
+    if(!stop && !ui->scanurl->isChecked())
     {
-        parsing = true;
-        page_index = taskdb.page_index;
-        site.parseSite(page);
-        ui->curent_cheking->setText(page);
+        QString page = taskdb.get_next_page();
+        if(!page.isEmpty())
+        {
+            parsing = true;
+            page_index = taskdb.page_index;
+            site.parseSite(page);
+            ui->curent_cheking->setText(page);
+        }
+    }
+    else
+    {
+        timer.stop();
+        msgBox.setText("Given url was successfuly parsed.");
+        msgBox.exec();
     }
 
 }
@@ -267,19 +281,20 @@ void MediaSiteDownloder::update_media_list()
         text =  i.key().toLocal8Bit();
         item->setText(text);
         item->setData(Qt::UserRole,i.key());
-        item->setCheckState(Qt::Checked);
+
         if(i.value()["downed"].toInt() == 0)
         {
             item->setIcon(QIcon(":/toolbar/Symbol-Error.png"));
-            qDebug()<<item->icon();
+            item->setCheckState(Qt::Checked);
         }
         else
         {
-            item->setIcon(QIcon(":/downd"));
+            item->setCheckState(Qt::Unchecked);
+            item->setIcon(QIcon(":/toolbar/Symbol-Add.png"));
         }
         item->setSelected(true);
         ui->medialist->insertItem(0,item);
-        qDebug() << i.key() << ": " << i.value() << endl;
+        ///qDebug() << i.key() << ": " << i.value() << endl;
     }
 }
 
@@ -312,6 +327,12 @@ void MediaSiteDownloder::on_pushButton_clicked()
 void MediaSiteDownloder::on_viewMediaList_clicked()
 {
     ui->actionTask_List->setEnabled(true);
+    ui->actionRefresh_Media_List->setEnabled(true);
+    ui->actionMedia_down->setEnabled(true);
+    ui->actionMedia_Up->setEnabled(true);
+    ui->actionShow_Errors->setEnabled(true);
+    ui->actionNew_Task->setEnabled(false);
+    ui->actionRemove_Task->setEnabled(false);
     ui->index->hide();
     ui->parse_info->show();
     ui->tasktabs->setCurrentIndex(1);
@@ -320,6 +341,13 @@ void MediaSiteDownloder::on_viewMediaList_clicked()
 void MediaSiteDownloder::on_actionTask_List_triggered()
 {
     ui->actionTask_List->setEnabled(false);
+    ui->actionRefresh_Media_List->setEnabled(false);
+    ui->actionMedia_down->setEnabled(false);
+    ui->actionMedia_Up->setEnabled(false);
+    ui->actionShow_Errors->setEnabled(false);
+    ui->actionNew_Task->setEnabled(true);
+    ui->actionRemove_Task->setEnabled(true);
+    stop = true;
     ui->parse_info->hide();
     parsing = false;
     ui->index->show();
@@ -405,4 +433,32 @@ void MediaSiteDownloder::on_actionCopy_to_Clipboard_triggered()
         clipboard->setText(media_map[ui->medialist->currentItem()->data(Qt::UserRole).toString()]["url"]);
         }
 
+}
+
+void MediaSiteDownloder::on_actionRemove_Task_triggered()
+{
+    if(ui->tasklist->currentIndex().isValid() && ui->tasklist->currentItem()->isSelected()){
+        QMessageBox msgBox;
+        msgBox.setText(tr("Do you realy want to delete task"));
+        msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::Cancel);
+        msgBox.setDefaultButton(QMessageBox::Cancel);
+        int ret = msgBox.exec();
+        if(ret == QMessageBox::Yes)
+        {
+            QSettings set(taskdir+ui->tasklist->currentItem()->text()+".project",QSettings::IniFormat);
+            QFile file;
+            QString dbname = taskdir+set.value("dbname","").toString()+".task";
+            qDebug()<<dbname;
+            QString current_dbname = taskdb.db.databaseName();
+            if(dbname == current_dbname )
+                 taskdb.close();
+            file.setFileName(dbname);
+            file.remove();
+            file.setFileName(taskdir+ui->tasklist->currentItem()->text()+".project");
+            file.remove();
+            ui->tasklist->removeItemWidget(ui->tasklist->currentItem());
+            init_app();
+        }
+
+    }
 }

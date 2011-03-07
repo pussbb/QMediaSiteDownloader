@@ -14,6 +14,7 @@ CREATE TABLE media (
   id INTEGER PRIMARY KEY,
   from_page INTEGER,
   url TEXT UNIQUE,
-  downloaded NUMERIC
+  downloaded NUMERIC,
+  error TEXT
 );
 

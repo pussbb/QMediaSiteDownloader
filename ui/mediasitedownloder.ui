@@ -57,6 +57,9 @@
           <pointsize>16</pointsize>
          </font>
         </property>
+        <property name="contextMenuPolicy">
+         <enum>Qt::CustomContextMenu</enum>
+        </property>
        </widget>
        <widget class="QWidget" name="main_info" native="true">
         <property name="enabled">
@@ -728,6 +731,9 @@
    </property>
   </action>
   <action name="actionRefresh_Media_List">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="icon">
     <iconset resource="../resource/qmsd_main.qrc">
      <normaloff>:/toolbar/Refresh.png</normaloff>:/toolbar/Refresh.png</iconset>
@@ -737,15 +743,21 @@
    </property>
   </action>
   <action name="actionShow_Errors">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="icon">
     <iconset resource="../resource/qmsd_main.qrc">
-     <normaloff>:/toolbar/error</normaloff>:/toolbar/error</iconset>
+     <normaloff>:/toolbar/Symbol-Error.png</normaloff>:/toolbar/Symbol-Error.png</iconset>
    </property>
    <property name="text">
     <string>Show Errors</string>
    </property>
   </action>
   <action name="actionMedia_down">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="icon">
     <iconset resource="../resource/qmsd_main.qrc">
      <normaloff>:/toolbar/Arrow-Down.png</normaloff>:/toolbar/Arrow-Down.png</iconset>
@@ -755,6 +767,9 @@
    </property>
   </action>
   <action name="actionMedia_Up">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="icon">
     <iconset resource="../resource/qmsd_main.qrc">
      <normaloff>:/toolbar/Arrow-Up.png</normaloff>:/toolbar/Arrow-Up.png</iconset>

@@ -14,7 +14,7 @@ AddTask::AddTask(QWidget *parent) :
     QClipboard* clipboard = QApplication::clipboard();
     QUrl* uri= new QUrl(clipboard->text(QClipboard::Clipboard),QUrl::TolerantMode);
         if(uri->scheme()!="http" && uri->scheme()!="https" && uri->scheme()!="ftp")
-        {  uri->setUrl("http://");}
+        {  uri->setUrl("http:////");}
     ui->taskurl->setText(uri->toString());
 }
 

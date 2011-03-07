@@ -11,7 +11,7 @@
         <file>Arrow-Up.png</file>
         <file>Symbol-Add.png</file>
         <file>Symbol-Restricted.png</file>
-        <file alias="error">Symbol-Error.png</file>
+        <file>Symbol-Error.png</file>
         <file>Refresh.png</file>
         <file alias="caution">Symbol-Exclamation.png</file>
         <file>link.png</file>

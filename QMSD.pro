@@ -23,19 +23,24 @@ SOURCES += main.cpp\
     src/addtask.cpp \
     src/taskdb.cpp \
     src/qparsesite.cpp \
-    src/errorlogui.cpp
+    src/errorlogui.cpp \
+    src/downloadfile.cpp \
+    src/about.cpp
 
 
 HEADERS  += headers/mediasitedownloder.h \
     headers/addtask.h \
     headers/taskdb.h \
     headers/qparsesite.h \
-    headers/errorlogui.h
+    headers/errorlogui.h \
+    headers/downloadfile.h \
+    headers/about.h
 
 FORMS    += \
     ui/mediasitedownloder.ui \
     ui/addtask.ui \
-    ui/errorlogui.ui
+    ui/errorlogui.ui \
+    ui/about.ui
 
 OTHER_FILES += \
     README

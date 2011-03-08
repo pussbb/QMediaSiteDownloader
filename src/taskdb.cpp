@@ -208,3 +208,29 @@ QStringList TaskDB::pages_with_error()
     }
     return list;
 }
+QStringList TaskDB::log_error()
+{
+    QSqlQuery sql;
+    sql.exec("SELECT error_str FROM pages WHERE parsed = 2");
+    QStringList list;
+    if(sql.lastError().isValid())
+        list<<tr("Error occurred while fetching results?");
+    while(sql.next())
+    {
+        list<<sql.value(0).toString();
+    }
+    sql.exec("SELECT error FROM media WHERE downloaded =2 ");
+    while(sql.next())
+    {
+        list<<sql.value(0).toString();
+    }
+    //list.removeDuplicates();
+    return list;
+}
+void TaskDB::set_media_down(QString error, int id, int val)
+{
+    QSqlQuery sql;
+    error.replace("'","\"\"");
+    sql.exec("UPDATE media SET downloaded="+QString::number(val)+", error='"+error+"' WHERE id="+QString::number(id)+";");
+
+}

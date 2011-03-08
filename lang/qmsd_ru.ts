@@ -60,7 +60,7 @@
 <context>
     <name>Language</name>
     <message>
-        <location filename="../src/mediasitedownloder.cpp" line="98"/>
+        <location filename="../src/mediasitedownloder.cpp" line="101"/>
         <source>English</source>
         <translation>Русский</translation>
     </message>
@@ -160,6 +160,7 @@
         <location filename="../ui/mediasitedownloder.ui" line="384"/>
         <location filename="../ui/mediasitedownloder.ui" line="410"/>
         <location filename="../ui/mediasitedownloder.ui" line="436"/>
+        <location filename="../ui/mediasitedownloder.ui" line="573"/>
         <source>0</source>
         <translation></translation>
     </message>
@@ -198,124 +199,204 @@
         <source>From</source>
         <translation>С</translation>
     </message>
-    <message utf8="true">
-        <location filename="../ui/mediasitedownloder.ui" line="583"/>
-        <source>Новый элемент</source>
+    <message>
+        <location filename="../ui/mediasitedownloder.ui" line="547"/>
+        <source>%p%</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mediasitedownloder.ui" line="601"/>
-        <location filename="../ui/mediasitedownloder.ui" line="618"/>
+        <location filename="../ui/mediasitedownloder.ui" line="560"/>
+        <location filename="../src/mediasitedownloder.cpp" line="319"/>
+        <location filename="../src/mediasitedownloder.cpp" line="614"/>
+        <source>Downloaded</source>
+        <translation>Закачано</translation>
+    </message>
+    <message>
+        <location filename="../ui/mediasitedownloder.ui" line="626"/>
+        <location filename="../ui/mediasitedownloder.ui" line="643"/>
+        <location filename="../ui/mediasitedownloder.ui" line="739"/>
+        <location filename="../ui/mediasitedownloder.ui" line="759"/>
         <source>...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mediasitedownloder.ui" line="643"/>
+        <location filename="../ui/mediasitedownloder.ui" line="660"/>
+        <source>Download</source>
+        <translation>Скачать</translation>
+    </message>
+    <message>
+        <location filename="../ui/mediasitedownloder.ui" line="677"/>
+        <source>Selected Only</source>
+        <translation>Только выбраный</translation>
+    </message>
+    <message>
+        <location filename="../ui/mediasitedownloder.ui" line="693"/>
+        <source>Stop</source>
+        <translation>Остановить</translation>
+    </message>
+    <message>
+        <location filename="../ui/mediasitedownloder.ui" line="710"/>
+        <source>Speed:</source>
+        <translation>Скорость</translation>
+    </message>
+    <message>
+        <location filename="../ui/mediasitedownloder.ui" line="723"/>
+        <source>0.0</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../ui/mediasitedownloder.ui" line="736"/>
+        <source>Zoom in</source>
+        <translation>Увеличить</translation>
+    </message>
+    <message>
+        <location filename="../ui/mediasitedownloder.ui" line="756"/>
+        <source>Zoom Out</source>
+        <translation>Уменьшить</translation>
+    </message>
+    <message>
+        <location filename="../ui/mediasitedownloder.ui" line="784"/>
         <source>File</source>
         <translation>Файл</translation>
     </message>
     <message>
-        <location filename="../ui/mediasitedownloder.ui" line="650"/>
+        <location filename="../ui/mediasitedownloder.ui" line="791"/>
         <source>Help</source>
         <translation>Помощь</translation>
     </message>
     <message>
-        <location filename="../ui/mediasitedownloder.ui" line="657"/>
+        <location filename="../ui/mediasitedownloder.ui" line="798"/>
         <source>Options</source>
         <translation>Опции</translation>
     </message>
     <message>
-        <location filename="../ui/mediasitedownloder.ui" line="687"/>
+        <location filename="../ui/mediasitedownloder.ui" line="828"/>
         <source>Exit</source>
         <translation>Выход</translation>
     </message>
     <message>
-        <location filename="../ui/mediasitedownloder.ui" line="692"/>
+        <location filename="../ui/mediasitedownloder.ui" line="833"/>
         <source>About</source>
         <translation>О ...</translation>
     </message>
     <message>
-        <location filename="../ui/mediasitedownloder.ui" line="697"/>
+        <location filename="../ui/mediasitedownloder.ui" line="838"/>
         <source>About QT</source>
         <translation>О QT</translation>
     </message>
     <message>
-        <location filename="../ui/mediasitedownloder.ui" line="706"/>
-        <location filename="../ui/mediasitedownloder.ui" line="709"/>
+        <location filename="../ui/mediasitedownloder.ui" line="847"/>
+        <location filename="../ui/mediasitedownloder.ui" line="850"/>
         <source>New Task</source>
         <translation>Новое задание</translation>
     </message>
     <message>
-        <location filename="../ui/mediasitedownloder.ui" line="718"/>
+        <location filename="../ui/mediasitedownloder.ui" line="859"/>
         <source>Remove Task</source>
         <translation>Удалить задание</translation>
     </message>
     <message>
-        <location filename="../ui/mediasitedownloder.ui" line="730"/>
+        <location filename="../ui/mediasitedownloder.ui" line="871"/>
         <source>Task List</source>
         <translation>Список Заданий</translation>
     </message>
     <message>
-        <location filename="../ui/mediasitedownloder.ui" line="742"/>
+        <location filename="../ui/mediasitedownloder.ui" line="883"/>
         <source>Refresh Media List</source>
         <translation>Обновить список файлов</translation>
     </message>
     <message>
-        <location filename="../ui/mediasitedownloder.ui" line="754"/>
+        <location filename="../ui/mediasitedownloder.ui" line="895"/>
         <source>Show Errors</source>
         <translation>Показать ошибки</translation>
     </message>
     <message>
-        <location filename="../ui/mediasitedownloder.ui" line="766"/>
+        <location filename="../ui/mediasitedownloder.ui" line="907"/>
         <source>Media Down</source>
         <translation>На позицию вниз </translation>
     </message>
     <message>
-        <location filename="../ui/mediasitedownloder.ui" line="778"/>
+        <location filename="../ui/mediasitedownloder.ui" line="919"/>
         <source>Media Up</source>
         <translation>На позицию вверх</translation>
     </message>
     <message>
-        <location filename="../ui/mediasitedownloder.ui" line="787"/>
+        <location filename="../ui/mediasitedownloder.ui" line="928"/>
         <source>Go to Page</source>
         <translation>Перейти на страницу</translation>
     </message>
     <message>
-        <location filename="../ui/mediasitedownloder.ui" line="796"/>
+        <location filename="../ui/mediasitedownloder.ui" line="937"/>
         <source>Copy to Clipboard</source>
         <translation>Скопировать в буфер обмена</translation>
     </message>
     <message>
-        <location filename="../src/mediasitedownloder.cpp" line="52"/>
+        <location filename="../ui/mediasitedownloder.ui" line="942"/>
+        <source>Open Directory</source>
+        <translation>Открыть папку</translation>
+    </message>
+    <message>
+        <location filename="../ui/mediasitedownloder.ui" line="947"/>
+        <source>Play</source>
+        <translation>Проиграть</translation>
+    </message>
+    <message>
+        <location filename="../src/mediasitedownloder.cpp" line="55"/>
         <source>Application is working now.</source>
         <translation>Приложение выполняет задание.</translation>
     </message>
     <message>
-        <location filename="../src/mediasitedownloder.cpp" line="53"/>
+        <location filename="../src/mediasitedownloder.cpp" line="56"/>
         <source>Do you realy want to close application?</source>
         <translation>Вы дейтсвительно хотите выйти из него?</translation>
     </message>
     <message>
-        <location filename="../src/mediasitedownloder.cpp" line="77"/>
-        <location filename="../src/mediasitedownloder.cpp" line="124"/>
-        <location filename="../src/mediasitedownloder.cpp" line="136"/>
+        <location filename="../src/mediasitedownloder.cpp" line="80"/>
+        <location filename="../src/mediasitedownloder.cpp" line="127"/>
+        <location filename="../src/mediasitedownloder.cpp" line="139"/>
         <source>langmenu</source>
         <translation>Языки</translation>
     </message>
     <message>
-        <location filename="../src/mediasitedownloder.cpp" line="99"/>
+        <location filename="../src/mediasitedownloder.cpp" line="102"/>
         <source>&amp;%2</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/mediasitedownloder.cpp" line="233"/>
+        <location filename="../src/mediasitedownloder.cpp" line="255"/>
         <source> Saving ...</source>
         <translation>Сохранение ...</translation>
     </message>
     <message>
-        <location filename="../src/mediasitedownloder.cpp" line="442"/>
+        <location filename="../src/mediasitedownloder.cpp" line="313"/>
+        <source>Not downloaded yet</source>
+        <translation>Еще не загружен</translation>
+    </message>
+    <message>
+        <location filename="../src/mediasitedownloder.cpp" line="326"/>
+        <location filename="../src/mediasitedownloder.cpp" line="620"/>
+        <source>Some error occur. See Error Log</source>
+        <translation>Произошла ошыбка. Смотрите Лог Ошибок</translation>
+    </message>
+    <message>
+        <location filename="../src/mediasitedownloder.cpp" line="485"/>
         <source>Do you realy want to delete task</source>
         <translation>Вы действително хотите удалить задание</translation>
+    </message>
+    <message>
+        <location filename="../src/mediasitedownloder.cpp" line="550"/>
+        <source>Found partially checked item.</source>
+        <translation>Найден частично выбранный елемент.</translation>
+    </message>
+    <message>
+        <location filename="../src/mediasitedownloder.cpp" line="551"/>
+        <source>Do you want to dawonload it?</source>
+        <translation>Хотите его закачать</translation>
+    </message>
+    <message>
+        <location filename="../src/mediasitedownloder.cpp" line="651"/>
+        <source>Setting saved.</source>
+        <translation>Настройки сохранены</translation>
     </message>
 </context>
 <context>
@@ -367,6 +448,7 @@
     </message>
     <message>
         <location filename="../src/taskdb.cpp" line="204"/>
+        <location filename="../src/taskdb.cpp" line="217"/>
         <source>Error occurred while fetching results?</source>
         <translation>Произошла ошибка при выборке результатов?</translation>
     </message>

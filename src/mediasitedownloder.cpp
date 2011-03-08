@@ -9,6 +9,9 @@ MediaSiteDownloder::MediaSiteDownloder(QWidget *parent) :
     ui->setupUi(this);
     parsing = false;
     ///taskdb=new TaskDB();
+    download = new DownloadFile(this,ui->downloading_media_progress,
+                                ui->download_file_speed,ui->downdsize);
+    connect(download,SIGNAL(DownloadMediaFinished(QString,bool)),this,SLOT(Download_media_Finished(QString,bool)));
     QMenuBar* bar=this->menuBar();
     QList<QAction *> actions = bar->actions();
     QList<QAction *>::const_iterator it = actions.begin();
@@ -46,7 +49,7 @@ MediaSiteDownloder::~MediaSiteDownloder()
 
 void MediaSiteDownloder::on_actionExit_triggered()
 {
-    if(parsing)
+    if(parsing || is_downloading)
     {
         QMessageBox msgBox;
         msgBox.setText(tr("Application is working now."));
@@ -174,6 +177,9 @@ void MediaSiteDownloder::on_actionNew_Task_triggered()
         foreach (QString str, task->map.keys())
             taskset.setValue(str,task->map.value(str));
         taskset.setValue("creation_date",QDateTime::currentDateTime ().toString());
+        taskset.setValue("db_version",taskdb.db_version());
+        taskset.setValue("auto_download",true);
+        taskset.setValue("scan_type","page_only");
         taskdb.close();
         taskset.sync();
         init_app();
@@ -185,6 +191,7 @@ void MediaSiteDownloder::on_tasklist_itemDoubleClicked(QListWidgetItem* item)
 {
     if(!item->text().isEmpty())
     {
+        current_task = item->text();
         QSettings tasksettings(taskdir+item->text()+".project",QSettings::IniFormat);
         ui->task_url->setText(tasksettings.value("url","null").toString());
         taskdb.open(tasksettings.value("dbname","null").toString());
@@ -192,7 +199,19 @@ void MediaSiteDownloder::on_tasklist_itemDoubleClicked(QListWidgetItem* item)
         ui->date_added->setText(tasksettings.value("creation_date","null").toString());
         ui->pages_crawled->setText(QString::number(taskdb.count_crawld()));
         ui->mediadowned->setText(QString::number(taskdb.count_media_downed()));
-
+        ui->save_task_settings->setEnabled(true);
+        if(tasksettings.value("auto_download",true).toBool()==true)
+            ui->autostartdown->setCheckState(Qt::Checked);
+        if(tasksettings.value("scan_type","site") == "site")
+        {
+            ui->scansite->setChecked(Qt::Checked);
+            ui->scanurl->setChecked(Qt::Unchecked);
+        }
+        else
+        {
+            ui->scansite->setChecked(Qt::Unchecked);
+            ui->scanurl->setChecked(Qt::Checked);
+        }
         if(taskdb.count_media()>0)
             update_media_list();
         ui->main_info->setEnabled(true);
@@ -211,7 +230,10 @@ void MediaSiteDownloder::on_startscan_clicked()
     ui->index->hide();
     ui->parse_info->show();
     ui->tasktabs->setCurrentIndex(0);
-    page_index=taskdb.add_page(ui->task_url->text());
+    if(taskdb.page_exists(ui->task_url->text()))
+        page_index = taskdb.page_index;
+    else
+        page_index=taskdb.add_page(ui->task_url->text());
     ui->curent_cheking->setText(ui->task_url->text());
     time.start();
     updateDisplay();
@@ -238,6 +260,8 @@ void MediaSiteDownloder::save_page_parsed(QStringList links, QStringList media,Q
         {
             taskdb.add_media(media,page_index);
             update_media_list();
+            if(ui->autostartdown->isChecked() && is_downloading == false)
+                download_all();
             ui->media_num->setText(QString::number(taskdb.count_media()));
         }
         taskdb.add_page(links);
@@ -281,16 +305,28 @@ void MediaSiteDownloder::update_media_list()
         text =  i.key().toLocal8Bit();
         item->setText(text);
         item->setData(Qt::UserRole,i.key());
-
-        if(i.value()["downed"].toInt() == 0)
+        switch(i.value()["downed"].toInt())
         {
+        case 0:{
             item->setIcon(QIcon(":/toolbar/Symbol-Error.png"));
             item->setCheckState(Qt::Checked);
+            item->setToolTip(tr("Not downloaded yet"));
+            break;
         }
-        else
-        {
+        case 1:{
             item->setCheckState(Qt::Unchecked);
             item->setIcon(QIcon(":/toolbar/Symbol-Add.png"));
+            item->setToolTip(tr("Downloaded"));
+            break;
+        }
+        default:
+        case 2 :{
+            item->setCheckState(Qt::PartiallyChecked);
+            item->setIcon(QIcon(":/toolbar/caution"));
+            item->setToolTip(tr("Some error occur. See Error Log"));
+
+            break;
+        }
         }
         item->setSelected(true);
         ui->medialist->insertItem(0,item);
@@ -347,6 +383,7 @@ void MediaSiteDownloder::on_actionTask_List_triggered()
     ui->actionShow_Errors->setEnabled(false);
     ui->actionNew_Task->setEnabled(true);
     ui->actionRemove_Task->setEnabled(true);
+
     stop = true;
     ui->parse_info->hide();
     parsing = false;
@@ -359,6 +396,11 @@ void MediaSiteDownloder::on_medialist_customContextMenuRequested(QPoint pos)
         QMenu *m=new QMenu();
         pos.setX(pos.x()-5);
         pos.setY(pos.y()+5);
+        if(media_map[ui->medialist->currentItem()->data(Qt::UserRole).toString()]["downed"] == "1")
+        {
+            m->addAction(ui->actionPlay);
+            m->addAction(ui->actionOpen_Directory);
+        }
         m->addAction(ui->actionGo_to_Page);
         m->addAction(ui->actionCopy_to_Clipboard);
         m->exec(ui->medialist->mapToGlobal(pos));
@@ -384,7 +426,7 @@ void MediaSiteDownloder::on_actionMedia_Up_triggered()
 void MediaSiteDownloder::on_actionShow_Errors_triggered()
 {
     ErrorLogUi* logui = new ErrorLogUi(this);
-    logui->build_list(taskdb.pages_with_error());
+    logui->build_list(taskdb.log_error());
     logui->exec();
     delete logui;
 }
@@ -420,7 +462,7 @@ void MediaSiteDownloder::on_actionRefresh_Media_List_triggered()
 void MediaSiteDownloder::on_actionGo_to_Page_triggered()
 {
     if(ui->medialist->currentIndex().isValid() && ui->medialist->currentItem()->isSelected()){
-    QDesktopServices::openUrl(QUrl(media_map[ui->medialist->currentItem()->data(Qt::UserRole).toString()]["page_url"], QUrl::TolerantMode));
+        QDesktopServices::openUrl(QUrl(media_map[ui->medialist->currentItem()->data(Qt::UserRole).toString()]["page_url"], QUrl::TolerantMode));
     }
 
 }
@@ -428,10 +470,11 @@ void MediaSiteDownloder::on_actionGo_to_Page_triggered()
 void MediaSiteDownloder::on_actionCopy_to_Clipboard_triggered()
 {
 
-        if(ui->medialist->currentIndex().isValid() && ui->medialist->currentItem()->isSelected()){
-            QClipboard *clipboard = QApplication::clipboard();
+    if(ui->medialist->currentIndex().isValid() && ui->medialist->currentItem()->isSelected())
+    {
+        QClipboard *clipboard = QApplication::clipboard();
         clipboard->setText(media_map[ui->medialist->currentItem()->data(Qt::UserRole).toString()]["url"]);
-        }
+    }
 
 }
 
@@ -448,10 +491,9 @@ void MediaSiteDownloder::on_actionRemove_Task_triggered()
             QSettings set(taskdir+ui->tasklist->currentItem()->text()+".project",QSettings::IniFormat);
             QFile file;
             QString dbname = taskdir+set.value("dbname","").toString()+".task";
-            qDebug()<<dbname;
             QString current_dbname = taskdb.db.databaseName();
             if(dbname == current_dbname )
-                 taskdb.close();
+                taskdb.close();
             file.setFileName(dbname);
             file.remove();
             file.setFileName(taskdir+ui->tasklist->currentItem()->text()+".project");
@@ -461,4 +503,172 @@ void MediaSiteDownloder::on_actionRemove_Task_triggered()
         }
 
     }
+}
+
+void MediaSiteDownloder::on_start_download_clicked()
+{
+    download_stoped = false;
+    is_downloading = true;
+    ui->start_download->setEnabled(false);
+    if(!ui->downfile_selected->isChecked())
+    {
+        download_all();
+    }
+    else
+    {
+        if(ui->medialist->currentIndex().isValid())
+        {
+            QListWidgetItem *current_media_item;
+            current_media_index = ui->medialist->currentIndex().row();
+            current_media_item = ui->medialist->currentItem();
+            current_media_text = ui->medialist->currentItem()->text();
+            ui->filename_media->setText(current_media_text);
+            ui->from_url_media->setText(media_map[current_media_item->data(Qt::UserRole).toString()]["url"]);
+            download->setMediaPath(media_path);
+            download->download(media_map[current_media_item->data(Qt::UserRole).toString()]["url"]);
+            ui->stop_download->setEnabled(true);
+        }
+        else
+        {
+            ui->start_download->setEnabled(true);
+            is_downloading = false;
+        }
+    }
+}
+
+void MediaSiteDownloder::download_all()
+{
+    bool found_first = false;
+    int i = 0;
+    QListWidgetItem *current_media_item;
+    int count = ui->medialist->count();
+    while(!found_first && count>i)
+    {
+        if(ui->medialist->item(i)->checkState() == Qt::PartiallyChecked)
+        {
+            QMessageBox msgBox;
+            msgBox.setText(tr("Found partially checked item."));
+            msgBox.setInformativeText(tr("Do you want to dawonload it?"));
+            msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::Cancel);
+            msgBox.setDefaultButton(QMessageBox::Cancel);
+            int ret = msgBox.exec();
+            if(ret == QMessageBox::Yes)
+            {
+                ui->medialist->item(i)->setCheckState(Qt::Checked);
+            }
+            else
+            {
+                ui->medialist->item(i)->setCheckState(Qt::Unchecked);
+            }
+        }
+        if(ui->medialist->item(i)->checkState() == Qt::Checked)
+        {
+            found_first = true;
+            current_media_index = i;
+            current_media_item = ui->medialist->item(i);
+            current_media_text = current_media_item->text();
+        }
+        ++i;
+    }
+    if(found_first)
+    {
+        ui->filename_media->setText(current_media_text);
+        ui->from_url_media->setText(media_map[current_media_item->data(Qt::UserRole).toString()]["url"]);
+        download->setMediaPath(media_path);
+        download->download(media_map[current_media_item->data(Qt::UserRole).toString()]["url"]);
+        ui->stop_download->setEnabled(true);
+    }
+    else
+    {
+        ui->start_download->setEnabled(true);
+        is_downloading =false;
+    }
+}
+
+void MediaSiteDownloder::on_stop_download_clicked()
+{
+
+    download_stoped = true;
+    is_downloading =false;
+    ui->start_download->setEnabled(true);
+    ui->stop_download->setEnabled(false);
+    download->abort_download();
+}
+
+void MediaSiteDownloder::Download_media_Finished(QString error, bool finished)
+{
+    QListWidgetItem *current_media_item;
+    current_media_item = ui->medialist->item(current_media_index);
+    if(current_media_item->text() != current_media_text)
+    {
+        QList<QListWidgetItem *> itemslist=ui->medialist->findItems(current_media_text,Qt::MatchExactly);
+        current_media_item = itemslist.at(0);
+    }
+    current_media_item->setCheckState(Qt::Unchecked);
+
+    int id =QVariant(media_map[current_media_item->data(Qt::UserRole).toString()]["id"]).toInt();
+
+    if(finished)
+    {
+        taskdb.set_media_down("",id);
+        current_media_item->setToolTip(tr("Downloaded"));
+        current_media_item->setIcon(QIcon(":/toolbar/Symbol-Add.png"));
+    }
+    else
+    {
+        taskdb.set_media_down(QDateTime::currentDateTime ().toString()+"  "+current_media_text+" : "+error,id,2);
+        current_media_item->setToolTip(tr("Some error occur. See Error Log"));
+        current_media_item->setIcon(QIcon(":/toolbar/caution"));
+    }
+    if(!ui->downfile_selected->isChecked() && !download_stoped)
+    {
+        download_all();
+    }
+}
+
+void MediaSiteDownloder::on_toolButton_zoomin_clicked()
+{
+    QFont font = ui->medialist->font();
+    font.setPointSize(font.pointSize()+1);
+    ui->medialist->setFont(font);
+}
+
+void MediaSiteDownloder::on_toolButton_zoomout_clicked()
+{
+    QFont font = ui->medialist->font();
+    font.setPointSize(font.pointSize()-1);
+    ui->medialist->setFont(font);
+}
+
+void MediaSiteDownloder::on_save_task_settings_clicked()
+{
+    QSettings tasksettings(taskdir+current_task+".project",QSettings::IniFormat);
+    tasksettings.setValue("auto_download",ui->autostartdown->isChecked());
+    if(ui->scansite->isChecked())
+        tasksettings.setValue("scan_type","site");
+    else
+        tasksettings.setValue("scan_type","page_only");
+    msgBox.setText(tr("Setting saved."));
+    msgBox.exec();
+}
+
+void MediaSiteDownloder::on_actionOpen_Directory_triggered()
+{
+    if(ui->medialist->currentIndex().isValid() && ui->medialist->currentItem()->isSelected()){
+        QDesktopServices::openUrl(QUrl(media_path, QUrl::TolerantMode));
+    }
+}
+
+void MediaSiteDownloder::on_actionPlay_triggered()
+{
+    if(ui->medialist->currentIndex().isValid() && ui->medialist->currentItem()->isSelected()){
+        QDesktopServices::openUrl(QUrl(media_path+ui->medialist->currentItem()->text(), QUrl::TolerantMode));
+    }
+}
+#include "headers/about.h"
+void MediaSiteDownloder::on_actionAbout_triggered()
+{
+    About *about = new About(this);
+    about->exec();
+    delete about;
 }

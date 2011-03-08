@@ -16,6 +16,10 @@
         <file alias="caution">Symbol-Exclamation.png</file>
         <file>link.png</file>
         <file>Paste.png</file>
+        <file>media-playback-start.png</file>
+        <file>media-playback-stop.png</file>
+        <file>Zoom-out.png</file>
+        <file>Zoom-in.png</file>
     </qresource>
     <qresource prefix="/">
         <file>main.png</file>

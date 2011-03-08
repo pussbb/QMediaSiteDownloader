@@ -299,9 +299,9 @@
        <widget class="QTabWidget" name="tasktabs">
         <property name="geometry">
          <rect>
-          <x>9</x>
+          <x>6</x>
           <y>9</y>
-          <width>590</width>
+          <width>597</width>
           <height>363</height>
          </rect>
         </property>
@@ -501,7 +501,7 @@
           <widget class="QLabel" name="filename_media">
            <property name="geometry">
             <rect>
-             <x>88</x>
+             <x>86</x>
              <y>20</y>
              <width>445</width>
              <height>16</height>
@@ -524,24 +524,53 @@
           <widget class="QLabel" name="from_url_media">
            <property name="geometry">
             <rect>
-             <x>76</x>
+             <x>70</x>
              <y>36</y>
              <width>471</width>
              <height>16</height>
             </rect>
            </property>
           </widget>
-          <widget class="QProgressBar" name="progressBar">
+          <widget class="QProgressBar" name="downloading_media_progress">
            <property name="geometry">
             <rect>
              <x>16</x>
              <y>58</y>
-             <width>515</width>
+             <width>367</width>
              <height>23</height>
             </rect>
            </property>
            <property name="value">
-            <number>24</number>
+            <number>0</number>
+           </property>
+           <property name="format">
+            <string>%p%</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="label_13">
+           <property name="geometry">
+            <rect>
+             <x>390</x>
+             <y>62</y>
+             <width>81</width>
+             <height>16</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Downloaded</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="downdsize">
+           <property name="geometry">
+            <rect>
+             <x>480</x>
+             <y>62</y>
+             <width>79</width>
+             <height>16</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>0</string>
            </property>
           </widget>
          </widget>
@@ -549,10 +578,15 @@
           <property name="geometry">
            <rect>
             <x>8</x>
-            <y>104</y>
+            <y>130</y>
             <width>537</width>
-            <height>229</height>
+            <height>203</height>
            </rect>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+           </font>
           </property>
           <property name="contextMenuPolicy">
            <enum>Qt::CustomContextMenu</enum>
@@ -578,21 +612,12 @@
           <property name="sortingEnabled">
            <bool>false</bool>
           </property>
-          <item>
-           <property name="text">
-            <string>Новый элемент</string>
-           </property>
-           <property name="icon">
-            <iconset resource="../resource/qmsd_main.qrc">
-             <normaloff>:/toolbar/Symbol-Restricted.png</normaloff>:/toolbar/Symbol-Restricted.png</iconset>
-           </property>
-          </item>
          </widget>
          <widget class="QToolButton" name="toolmediaup">
           <property name="geometry">
            <rect>
             <x>552</x>
-            <y>110</y>
+            <y>134</y>
             <width>25</width>
             <height>24</height>
            </rect>
@@ -609,7 +634,7 @@
           <property name="geometry">
            <rect>
             <x>552</x>
-            <y>142</y>
+            <y>170</y>
             <width>25</width>
             <height>24</height>
            </rect>
@@ -620,6 +645,122 @@
           <property name="icon">
            <iconset resource="../resource/qmsd_main.qrc">
             <normaloff>:/toolbar/Arrow-Down.png</normaloff>:/toolbar/Arrow-Down.png</iconset>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="start_download">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>100</y>
+            <width>99</width>
+            <height>25</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Download</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../resource/qmsd_main.qrc">
+            <normaloff>:/toolbar/media-playback-start.png</normaloff>:/toolbar/media-playback-start.png</iconset>
+          </property>
+         </widget>
+         <widget class="QCheckBox" name="downfile_selected">
+          <property name="geometry">
+           <rect>
+            <x>248</x>
+            <y>104</y>
+            <width>119</width>
+            <height>20</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Selected Only</string>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="stop_download">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="geometry">
+           <rect>
+            <x>126</x>
+            <y>100</y>
+            <width>107</width>
+            <height>25</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Stop</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../resource/qmsd_main.qrc">
+            <normaloff>:/toolbar/media-playback-stop.png</normaloff>:/toolbar/media-playback-stop.png</iconset>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_12">
+          <property name="geometry">
+           <rect>
+            <x>400</x>
+            <y>106</y>
+            <width>75</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Speed:</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="download_file_speed">
+          <property name="geometry">
+           <rect>
+            <x>490</x>
+            <y>106</y>
+            <width>73</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>0.0</string>
+          </property>
+         </widget>
+         <widget class="QToolButton" name="toolButton_zoomin">
+          <property name="geometry">
+           <rect>
+            <x>552</x>
+            <y>202</y>
+            <width>25</width>
+            <height>24</height>
+           </rect>
+          </property>
+          <property name="toolTip">
+           <string>Zoom in</string>
+          </property>
+          <property name="text">
+           <string>...</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../resource/qmsd_main.qrc">
+            <normaloff>:/toolbar/Zoom-in.png</normaloff>:/toolbar/Zoom-in.png</iconset>
+          </property>
+         </widget>
+         <widget class="QToolButton" name="toolButton_zoomout">
+          <property name="geometry">
+           <rect>
+            <x>552</x>
+            <y>236</y>
+            <width>25</width>
+            <height>24</height>
+           </rect>
+          </property>
+          <property name="toolTip">
+           <string>Zoom Out</string>
+          </property>
+          <property name="text">
+           <string>...</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../resource/qmsd_main.qrc">
+            <normaloff>:/toolbar/Zoom-out.png</normaloff>:/toolbar/Zoom-out.png</iconset>
           </property>
          </widget>
         </widget>
@@ -794,6 +935,16 @@
    </property>
    <property name="text">
     <string>Copy to Clipboard</string>
+   </property>
+  </action>
+  <action name="actionOpen_Directory">
+   <property name="text">
+    <string>Open Directory</string>
+   </property>
+  </action>
+  <action name="actionPlay">
+   <property name="text">
+    <string>Play</string>
    </property>
   </action>
  </widget>

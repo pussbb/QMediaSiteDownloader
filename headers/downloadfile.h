@@ -31,7 +31,7 @@ public slots:
      void finishedSlot(QNetworkReply*)   ;
      void DownloadProgress(qint64 , qint64 );
 private:
-     QNetworkAccessManager *nam;
+     QNetworkAccessManager *dnam;
      QNetworkReply *Reply;
      QTime downloadTime;
 };

@@ -25,7 +25,7 @@ MediaSiteDownloder::MediaSiteDownloder(QWidget *parent) :
         }
     }
     taskdb.setFolder(taskdir);
-    stop = false;
+
     init_app();
 }
 void MediaSiteDownloder::init_app()
@@ -192,6 +192,17 @@ void MediaSiteDownloder::on_tasklist_itemDoubleClicked(QListWidgetItem* item)
     if(!item->text().isEmpty())
     {
         current_task = item->text();
+        stop = false;
+        parsing = false;
+        if(is_downloading)
+        {
+            download_stoped = true;
+            is_downloading = false;
+            ui->start_download->setEnabled(true);
+            ui->stop_download->setEnabled(false);
+            download->abort_download();
+        }
+
         QSettings tasksettings(taskdir+item->text()+".project",QSettings::IniFormat);
         ui->task_url->setText(tasksettings.value("url","null").toString());
         taskdb.open(tasksettings.value("dbname","null").toString());
@@ -540,6 +551,8 @@ void MediaSiteDownloder::download_all()
 {
     bool found_first = false;
     int i = 0;
+    is_downloading = true;
+    download_stoped = false;
     QListWidgetItem *current_media_item;
     int count = ui->medialist->count();
     while(!found_first && count>i)
@@ -577,10 +590,12 @@ void MediaSiteDownloder::download_all()
         download->setMediaPath(media_path);
         download->download(media_map[current_media_item->data(Qt::UserRole).toString()]["url"]);
         ui->stop_download->setEnabled(true);
+        ui->start_download->setEnabled(false);
     }
     else
     {
         ui->start_download->setEnabled(true);
+        ui->stop_download->setEnabled(false);
         is_downloading =false;
     }
 }

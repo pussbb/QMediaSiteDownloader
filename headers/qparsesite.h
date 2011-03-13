@@ -17,6 +17,7 @@ class QParseSite :  public QThread
 public:
     QParseSite(QObject *parent = 0);
     QNetworkAccessManager *nam;
+    QNetworkReply *PReply;
     int parent_page;
     bool parsed;
     int total;

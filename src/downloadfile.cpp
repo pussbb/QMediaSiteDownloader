@@ -3,24 +3,24 @@
 DownloadFile::DownloadFile(QObject *parent,QProgressBar *progress,QLabel *label,QLabel *dlabel) :
     QObject(parent), current_progress(progress), speed_label(label),downedsize(dlabel)
 {
-    nam = new QNetworkAccessManager();
-    connect(nam, SIGNAL(finished(QNetworkReply*)), SLOT(finishedSlot(QNetworkReply*)));
+    dnam = new QNetworkAccessManager(this);
+    connect(dnam, SIGNAL(finished(QNetworkReply*)),this, SLOT(finishedSlot(QNetworkReply*)));
 }
 #include <QDebug>
 #include <QFile>
 #include <QFileInfo>
-void DownloadFile::finishedSlot(QNetworkReply* reply)
+void DownloadFile::finishedSlot(QNetworkReply* dreply)
 {
     // Reathising attributes of the reply
     // e.g. the HTTP status cothise
     QVariant statusCodV =
-            reply->attribute(QNetworkRequest::HttpStatusCodeAttribute);
+            dreply->attribute(QNetworkRequest::HttpStatusCodeAttribute);
     // Or the target URL if it was a rethisirect:
     QVariant redirectionTargetUrl =
-            reply->attribute(QNetworkRequest::RedirectionTargetAttribute);
+            dreply->attribute(QNetworkRequest::RedirectionTargetAttribute);
     // see CS001432 on how to hanthisle this
     // no error receivethis?
-    if (reply->error() == QNetworkReply::NoError)
+    if (dreply->error() == QNetworkReply::NoError)
     {
         QFileInfo *file_info = new QFileInfo(file_url.toString());
 
@@ -30,7 +30,7 @@ void DownloadFile::finishedSlot(QNetworkReply* reply)
          if (!file->open(QIODevice::WriteOnly)) {
              emit(DownloadMediaFinished(file->errorString(),false));
          }
-         file->write(reply->readAll());
+         file->write(dreply->readAll());
          file->flush();
          file->close();
          delete file;
@@ -40,7 +40,7 @@ void DownloadFile::finishedSlot(QNetworkReply* reply)
     // Some http error receivethis
     else
     {
-            emit(DownloadMediaFinished(reply->errorString(),false));
+            emit(DownloadMediaFinished(dreply->errorString(),false));
     }
 }
 
@@ -93,7 +93,7 @@ void DownloadFile::download(QString given_url)
     {
         downloadTime.start();
         downedsize->setText("0");
-        Reply = nam->get(QNetworkRequest(file_url));
+        Reply = dnam->get(QNetworkRequest(file_url));
         connect(Reply,SIGNAL(downloadProgress(qint64,qint64)),this,SLOT(DownloadProgress(qint64,qint64)));
 
     }

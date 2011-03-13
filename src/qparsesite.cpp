@@ -106,7 +106,7 @@ void QParseSite::parse_page(QString content)
 
 
         }
-        emit page_parsed(links.filter(siteurl.host()),media,content,"");
+        emit page_parsed(links.filter(siteurl.host()),media,"","");
     }
 
 
@@ -130,7 +130,7 @@ void QParseSite::get_page(QUrl url)
 {
     if(url.scheme()=="http" || url.scheme()=="https" || url.scheme()=="ftp")
     {
-        nam->get(QNetworkRequest(url));
+        PReply = nam->get(QNetworkRequest(url));
     }
     else
     {

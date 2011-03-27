@@ -25,7 +25,7 @@ MediaSiteDownloder::MediaSiteDownloder(QWidget *parent) :
         }
     }
     taskdb.setFolder(taskdir);
-
+    is_downloading = false;
     init_app();
 }
 void MediaSiteDownloder::init_app()

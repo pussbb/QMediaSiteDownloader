@@ -192,8 +192,13 @@ void MediaSiteDownloder::on_tasklist_itemDoubleClicked(QListWidgetItem* item)
     if(!item->text().isEmpty())
     {
         current_task = item->text();
-        stop = false;
-        parsing = false;
+        if(parsing)
+        {
+            stop = false;
+            parsing = false;
+            site.abort();
+        }
+
         if(is_downloading)
         {
             download_stoped = true;
@@ -240,7 +245,11 @@ void MediaSiteDownloder::on_startscan_clicked()
     ui->actionRemove_Task->setEnabled(false);
     ui->index->hide();
     ui->parse_info->show();
+    ui->log->clear();
     ui->tasktabs->setCurrentIndex(0);
+    ui->media_num->setText(QString::number(taskdb.count_media()));
+    ui->numder_checked->setText(QString::number(taskdb.count_crawld()));
+    ui->left_num->setText(QString::number(taskdb.count_left()));
     if(taskdb.page_exists(ui->task_url->text()))
         page_index = taskdb.page_index;
     else
@@ -250,9 +259,10 @@ void MediaSiteDownloder::on_startscan_clicked()
     updateDisplay();
     connect(&timer, SIGNAL(timeout()), this, SLOT(updateDisplay()));
     timer.start(1000);
-    site.start();
+    ////site.start();
     connect(&site, SIGNAL(page_parsed(QStringList,QStringList,QString,QString)),this,SLOT(save_page_parsed(QStringList,QStringList,QString,QString)));
     parsing =  true;
+    stop = false;
     site.siteurl.setUrl(ui->task_url->text(),QUrl::TolerantMode);
     site.parseSite(ui->task_url->text());
     ///  site.run();
@@ -261,7 +271,9 @@ void MediaSiteDownloder::on_startscan_clicked()
 
 void MediaSiteDownloder::save_page_parsed(QStringList links, QStringList media,QString content,QString msg)
 {
-    parsing = false;
+    if(!timer.isActive())
+        return;
+
     Q_UNUSED(content);
     ui->curent_cheking->setText(tr(" Saving ...")+ui->curent_cheking->text());
     if(msg.isEmpty())
@@ -283,7 +295,8 @@ void MediaSiteDownloder::save_page_parsed(QStringList links, QStringList media,Q
         taskdb.set_page_parsed((int)page_index, 2,"" ,msg);
         ui->log->addItem(msg);
     }
-    if(!stop && !ui->scanurl->isChecked())
+
+    if(stop == false && ui->scanurl->isChecked() == false)
     {
         QString page = taskdb.get_next_page();
         if(!page.isEmpty())
@@ -297,8 +310,9 @@ void MediaSiteDownloder::save_page_parsed(QStringList links, QStringList media,Q
     else
     {
         timer.stop();
-        msgBox.setText("Given url was successfuly parsed.");
+        msgBox.setText(tr("Given url was successfuly parsed."));
         msgBox.exec();
+        page_index = 0;
     }
 
 }
@@ -409,7 +423,7 @@ void MediaSiteDownloder::on_medialist_customContextMenuRequested(QPoint pos)
         pos.setY(pos.y()+5);
         if(media_map[ui->medialist->currentItem()->data(Qt::UserRole).toString()]["downed"] == "1")
         {
-            m->addAction(ui->actionPlay);
+          ///  m->addAction(ui->actionPlay);
             m->addAction(ui->actionOpen_Directory);
         }
         m->addAction(ui->actionGo_to_Page);
@@ -686,4 +700,10 @@ void MediaSiteDownloder::on_actionAbout_triggered()
     About *about = new About(this);
     about->exec();
     delete about;
+}
+
+void MediaSiteDownloder::on_repeatscan_clicked()
+{
+    taskdb.reset_scaned();
+    this->on_startscan_clicked();
 }

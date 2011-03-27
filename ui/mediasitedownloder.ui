@@ -293,6 +293,19 @@
           <string>Media List</string>
          </property>
         </widget>
+        <widget class="QPushButton" name="repeatscan">
+         <property name="geometry">
+          <rect>
+           <x>202</x>
+           <y>246</y>
+           <width>115</width>
+           <height>25</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Scan Again</string>
+         </property>
+        </widget>
        </widget>
       </widget>
       <widget class="QWidget" name="parse_info">

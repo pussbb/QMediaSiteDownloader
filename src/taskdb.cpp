@@ -198,7 +198,7 @@ QMap<QString,QMap<QString,QString> > TaskDB::media_files()
 QStringList TaskDB::pages_with_error()
 {
     QSqlQuery sql;
-    sql.exec("SELECT error_str FROM pages WHERE parsed = 2");
+    sql.exec("SELECT error_str FROM pages WHERE error_str <> ''");
     QStringList list;
     if(sql.lastError().isValid())
         return list<<tr("Error occurred while fetching results?");
@@ -233,4 +233,10 @@ void TaskDB::set_media_down(QString error, int id, int val)
     error.replace("'","\"\"");
     sql.exec("UPDATE media SET downloaded="+QString::number(val)+", error='"+error+"' WHERE id="+QString::number(id)+";");
 
+}
+
+void TaskDB::reset_scaned()
+{
+    QSqlQuery sql;
+    sql.exec("UPDATE pages SET parsed = 0;");
 }

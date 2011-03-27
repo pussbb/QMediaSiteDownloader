@@ -97,6 +97,8 @@ private slots:
 
     void on_actionAbout_triggered();
 
+    void on_repeatscan_clicked();
+
 private:
     bool stop;
     bool parsing;

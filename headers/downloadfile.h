@@ -23,7 +23,7 @@ public:
     QLabel *downedsize;
     QProgressBar *current_progress;
     QDir dir;
-    void inline abort_download(){Reply->abort();};
+    void inline abort_download(){Reply->close();};
 signals:
     void DownloadMediaFinished(QString error,bool finished);
 

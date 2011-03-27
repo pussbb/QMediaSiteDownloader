@@ -32,6 +32,7 @@ public:
     int count_left();
     int count_media();
     int count_media_downed();
+    void reset_scaned();
     void set_media_down(QString error = "", int id = 0,int val =1);
     QStringList  log_error();
 

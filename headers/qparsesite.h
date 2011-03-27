@@ -26,6 +26,7 @@ public:
     QStringList media;
     void run();
     QUrl siteurl;
+    inline void abort(){PReply->abort();};
 private:
 
 private slots:

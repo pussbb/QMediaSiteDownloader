@@ -2,6 +2,67 @@
 <!DOCTYPE TS>
 <TS version="2.0" language="en_US">
 <context>
+    <name>About</name>
+    <message>
+        <location filename="../ui/about.ui" line="14"/>
+        <source>Dialog</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../ui/about.ui" line="26"/>
+        <source>QMedia Site Downloder</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../ui/about.ui" line="39"/>
+        <source>version</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../ui/about.ui" line="52"/>
+        <source>Alpha preview</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../ui/about.ui" line="65"/>
+        <source>Issue tracker</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../ui/about.ui" line="78"/>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;https://github.com/pussbb/QMediaSiteDownloader/issues&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0057ae;&quot;&gt;HERE&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../ui/about.ui" line="95"/>
+        <source>author</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../ui/about.ui" line="108"/>
+        <source>_pussbb</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../ui/about.ui" line="121"/>
+        <source>email</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../ui/about.ui" line="134"/>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;mailto:pussbb@gmail.com&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0057ae;&quot;&gt;pussbb@gmail.com&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation></translation>
+    </message>
+</context>
+<context>
     <name>AddTask</name>
     <message>
         <location filename="../ui/addtask.ui" line="20"/>
@@ -133,206 +194,211 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mediasitedownloder.ui" line="313"/>
+        <location filename="../ui/mediasitedownloder.ui" line="306"/>
+        <source>Scan Again</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../ui/mediasitedownloder.ui" line="326"/>
         <source>Log</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mediasitedownloder.ui" line="335"/>
+        <location filename="../ui/mediasitedownloder.ui" line="348"/>
         <source>Checking</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mediasitedownloder.ui" line="358"/>
+        <location filename="../ui/mediasitedownloder.ui" line="371"/>
         <source>Erorr log</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mediasitedownloder.ui" line="371"/>
+        <location filename="../ui/mediasitedownloder.ui" line="384"/>
         <source>Checked</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mediasitedownloder.ui" line="384"/>
-        <location filename="../ui/mediasitedownloder.ui" line="410"/>
-        <location filename="../ui/mediasitedownloder.ui" line="436"/>
-        <location filename="../ui/mediasitedownloder.ui" line="573"/>
+        <location filename="../ui/mediasitedownloder.ui" line="397"/>
+        <location filename="../ui/mediasitedownloder.ui" line="423"/>
+        <location filename="../ui/mediasitedownloder.ui" line="449"/>
+        <location filename="../ui/mediasitedownloder.ui" line="586"/>
         <source>0</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mediasitedownloder.ui" line="397"/>
+        <location filename="../ui/mediasitedownloder.ui" line="410"/>
         <source>Left</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mediasitedownloder.ui" line="423"/>
+        <location filename="../ui/mediasitedownloder.ui" line="436"/>
         <source>Media found</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mediasitedownloder.ui" line="449"/>
+        <location filename="../ui/mediasitedownloder.ui" line="462"/>
         <source>Time</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mediasitedownloder.ui" line="468"/>
+        <location filename="../ui/mediasitedownloder.ui" line="481"/>
         <source>Media files</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mediasitedownloder.ui" line="486"/>
+        <location filename="../ui/mediasitedownloder.ui" line="499"/>
         <source>Downloading info</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mediasitedownloder.ui" line="498"/>
+        <location filename="../ui/mediasitedownloder.ui" line="511"/>
         <source>Current:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mediasitedownloder.ui" line="521"/>
+        <location filename="../ui/mediasitedownloder.ui" line="534"/>
         <source>From</source>
         <translation>С</translation>
     </message>
     <message>
-        <location filename="../ui/mediasitedownloder.ui" line="547"/>
+        <location filename="../ui/mediasitedownloder.ui" line="560"/>
         <source>%p%</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mediasitedownloder.ui" line="560"/>
-        <location filename="../src/mediasitedownloder.cpp" line="319"/>
-        <location filename="../src/mediasitedownloder.cpp" line="614"/>
+        <location filename="../ui/mediasitedownloder.ui" line="573"/>
+        <location filename="../src/mediasitedownloder.cpp" line="344"/>
+        <location filename="../src/mediasitedownloder.cpp" line="643"/>
         <source>Downloaded</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mediasitedownloder.ui" line="942"/>
+        <location filename="../ui/mediasitedownloder.ui" line="955"/>
         <source>Open Directory</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mediasitedownloder.ui" line="947"/>
+        <location filename="../ui/mediasitedownloder.ui" line="960"/>
         <source>Play</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mediasitedownloder.ui" line="626"/>
-        <location filename="../ui/mediasitedownloder.ui" line="643"/>
-        <location filename="../ui/mediasitedownloder.ui" line="739"/>
-        <location filename="../ui/mediasitedownloder.ui" line="759"/>
+        <location filename="../ui/mediasitedownloder.ui" line="639"/>
+        <location filename="../ui/mediasitedownloder.ui" line="656"/>
+        <location filename="../ui/mediasitedownloder.ui" line="752"/>
+        <location filename="../ui/mediasitedownloder.ui" line="772"/>
         <source>...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mediasitedownloder.ui" line="660"/>
+        <location filename="../ui/mediasitedownloder.ui" line="673"/>
         <source>Download</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mediasitedownloder.ui" line="677"/>
+        <location filename="../ui/mediasitedownloder.ui" line="690"/>
         <source>Selected Only</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mediasitedownloder.ui" line="693"/>
+        <location filename="../ui/mediasitedownloder.ui" line="706"/>
         <source>Stop</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mediasitedownloder.ui" line="710"/>
+        <location filename="../ui/mediasitedownloder.ui" line="723"/>
         <source>Speed:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mediasitedownloder.ui" line="723"/>
+        <location filename="../ui/mediasitedownloder.ui" line="736"/>
         <source>0.0</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mediasitedownloder.ui" line="736"/>
+        <location filename="../ui/mediasitedownloder.ui" line="749"/>
         <source>Zoom in</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mediasitedownloder.ui" line="756"/>
+        <location filename="../ui/mediasitedownloder.ui" line="769"/>
         <source>Zoom Out</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mediasitedownloder.ui" line="784"/>
+        <location filename="../ui/mediasitedownloder.ui" line="797"/>
         <source>File</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mediasitedownloder.ui" line="791"/>
+        <location filename="../ui/mediasitedownloder.ui" line="804"/>
         <source>Help</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mediasitedownloder.ui" line="798"/>
+        <location filename="../ui/mediasitedownloder.ui" line="811"/>
         <source>Options</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mediasitedownloder.ui" line="828"/>
+        <location filename="../ui/mediasitedownloder.ui" line="841"/>
         <source>Exit</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mediasitedownloder.ui" line="833"/>
+        <location filename="../ui/mediasitedownloder.ui" line="846"/>
         <source>About</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mediasitedownloder.ui" line="838"/>
+        <location filename="../ui/mediasitedownloder.ui" line="851"/>
         <source>About QT</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mediasitedownloder.ui" line="847"/>
-        <location filename="../ui/mediasitedownloder.ui" line="850"/>
+        <location filename="../ui/mediasitedownloder.ui" line="860"/>
+        <location filename="../ui/mediasitedownloder.ui" line="863"/>
         <source>New Task</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mediasitedownloder.ui" line="859"/>
+        <location filename="../ui/mediasitedownloder.ui" line="872"/>
         <source>Remove Task</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mediasitedownloder.ui" line="871"/>
+        <location filename="../ui/mediasitedownloder.ui" line="884"/>
         <source>Task List</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mediasitedownloder.ui" line="883"/>
+        <location filename="../ui/mediasitedownloder.ui" line="896"/>
         <source>Refresh Media List</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mediasitedownloder.ui" line="895"/>
+        <location filename="../ui/mediasitedownloder.ui" line="908"/>
         <source>Show Errors</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mediasitedownloder.ui" line="907"/>
+        <location filename="../ui/mediasitedownloder.ui" line="920"/>
         <source>Media Down</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mediasitedownloder.ui" line="919"/>
+        <location filename="../ui/mediasitedownloder.ui" line="932"/>
         <source>Media Up</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mediasitedownloder.ui" line="928"/>
+        <location filename="../ui/mediasitedownloder.ui" line="941"/>
         <source>Go to Page</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mediasitedownloder.ui" line="937"/>
+        <location filename="../ui/mediasitedownloder.ui" line="950"/>
         <source>Copy to Clipboard</source>
         <translation></translation>
     </message>
@@ -359,38 +425,43 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/mediasitedownloder.cpp" line="255"/>
+        <location filename="../src/mediasitedownloder.cpp" line="278"/>
         <source> Saving ...</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../src/mediasitedownloder.cpp" line="313"/>
+        <source>Given url was successfuly parsed.</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../src/mediasitedownloder.cpp" line="338"/>
         <source>Not downloaded yet</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/mediasitedownloder.cpp" line="326"/>
-        <location filename="../src/mediasitedownloder.cpp" line="620"/>
+        <location filename="../src/mediasitedownloder.cpp" line="351"/>
+        <location filename="../src/mediasitedownloder.cpp" line="649"/>
         <source>Some error occur. See Error Log</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/mediasitedownloder.cpp" line="485"/>
+        <location filename="../src/mediasitedownloder.cpp" line="510"/>
         <source>Do you realy want to delete task</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/mediasitedownloder.cpp" line="550"/>
+        <location filename="../src/mediasitedownloder.cpp" line="577"/>
         <source>Found partially checked item.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/mediasitedownloder.cpp" line="551"/>
+        <location filename="../src/mediasitedownloder.cpp" line="578"/>
         <source>Do you want to dawonload it?</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/mediasitedownloder.cpp" line="651"/>
+        <location filename="../src/mediasitedownloder.cpp" line="680"/>
         <source>Setting saved.</source>
         <translation></translation>
     </message>

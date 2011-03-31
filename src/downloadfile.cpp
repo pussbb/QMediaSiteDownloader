@@ -19,24 +19,30 @@ void DownloadFile::finishedSlot(QNetworkReply* dreply)
     QVariant redirectionTargetUrl =
             dreply->attribute(QNetworkRequest::RedirectionTargetAttribute);
     // see CS001432 on how to hanthisle this
+    qDebug()<<redirectionTargetUrl;
     // no error receivethis?
-    if (dreply->error() == QNetworkReply::NoError)
+    if(!redirectionTargetUrl.toUrl().isEmpty())
     {
-        QFileInfo *file_info = new QFileInfo(file_url.toString());
-
-        QFile *file = new QFile(dir.path()+QDir::toNativeSeparators("/")+file_info->fileName());
-        if(file->exists())
-                file->remove();
-         if (!file->open(QIODevice::WriteOnly)) {
-             emit(DownloadMediaFinished(file->errorString(),false));
-         }
-         file->write(dreply->readAll());
-         file->flush();
-         file->close();
-         delete file;
-         emit(DownloadMediaFinished("",true));
-         speed_label->setText("0.0 bytes/sec");
+           download(redirectionTargetUrl.toString());
     }
+    else
+        if (dreply->error() == QNetworkReply::NoError)
+        {
+            QFileInfo *file_info = new QFileInfo(file_url.toString());
+
+            QFile *file = new QFile(dir.path()+QDir::toNativeSeparators("/")+file_info->fileName());
+            if(file->exists())
+                    file->remove();
+             if (!file->open(QIODevice::WriteOnly)) {
+                 emit(DownloadMediaFinished(file->errorString(),false));
+             }
+             file->write(dreply->readAll());
+             file->flush();
+             file->close();
+             delete file;
+             emit(DownloadMediaFinished("",true));
+             speed_label->setText("0.0 bytes/sec");
+        }
     // Some http error receivethis
     else
     {

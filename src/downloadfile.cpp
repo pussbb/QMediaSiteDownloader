@@ -19,7 +19,14 @@ void DownloadFile::finishedSlot(QNetworkReply* dreply)
     QVariant redirectionTargetUrl =
             dreply->attribute(QNetworkRequest::RedirectionTargetAttribute);
     // see CS001432 on how to hanthisle this
-    qDebug()<<redirectionTargetUrl;
+    if(is_downloading)
+    {
+        file->flush();
+       file->close();
+        delete file;
+        emit(DownloadMediaFinished("",true));
+         speed_label->setText("0.0 bytes/sec");
+    }
     // no error receivethis?
     if(!redirectionTargetUrl.toUrl().isEmpty())
     {
@@ -28,29 +35,24 @@ void DownloadFile::finishedSlot(QNetworkReply* dreply)
     else
         if (dreply->error() == QNetworkReply::NoError)
         {
-            QFileInfo *file_info = new QFileInfo(file_url.toString());
 
-            QFile *file = new QFile(dir.path()+QDir::toNativeSeparators("/")+file_info->fileName());
-            if(file->exists())
-                    file->remove();
-             if (!file->open(QIODevice::WriteOnly)) {
-                 emit(DownloadMediaFinished(file->errorString(),false));
-             }
-             file->write(dreply->readAll());
-             file->flush();
-             file->close();
-             delete file;
-             emit(DownloadMediaFinished("",true));
-             speed_label->setText("0.0 bytes/sec");
+
+
+
         }
     // Some http error receivethis
     else
     {
             emit(DownloadMediaFinished(dreply->errorString(),false));
     }
+
 }
 
-
+void DownloadFile::httpReadyRead()
+{
+    is_downloading = true;
+     file->write(Reply->readAll());
+}
 
 void DownloadFile::DownloadProgress(qint64 bytesReceived, qint64 bytesTotal)
 {
@@ -76,7 +78,8 @@ void DownloadFile::DownloadProgress(qint64 bytesReceived, qint64 bytesTotal)
         if (speed < 1024) {
             unit = "bytes/sec";
         } else if (speed < 1024*1024) {
-            speed /= 1024;
+            speed /= 1024; connect(Reply, SIGNAL(readyRead()),
+                                   this, SLOT(httpReadyRead()));
             unit = "kB/s";
         } else {
             speed /= 1024*1024;
@@ -99,9 +102,19 @@ void DownloadFile::download(QString given_url)
     {
         downloadTime.start();
         downedsize->setText("0");
+        is_downloading = false;
         Reply = dnam->get(QNetworkRequest(file_url));
         connect(Reply,SIGNAL(downloadProgress(qint64,qint64)),this,SLOT(DownloadProgress(qint64,qint64)));
+        connect(Reply, SIGNAL(readyRead()),
+                     this, SLOT(httpReadyRead()));
+        QFileInfo *file_info = new QFileInfo(file_url.toString());
 
+        file = new QFile(dir.path()+QDir::toNativeSeparators("/")+file_info->fileName());
+        if(file->exists())
+                file->remove();
+         if (!file->open(QIODevice::WriteOnly)) {
+             emit(DownloadMediaFinished(file->errorString(),false));
+         }
     }
     else
     {

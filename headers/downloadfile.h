@@ -19,10 +19,12 @@ public:
     void inline setMediaPath(QString path){dir.setPath(path);};
     void download(QString given_url);
     QUrl file_url;
+    QFile *file;
     QLabel *speed_label;
     QLabel *downedsize;
     QProgressBar *current_progress;
     QDir dir;
+    bool is_downloading;
     void inline abort_download(){Reply->close();};
 signals:
     void DownloadMediaFinished(QString error,bool finished);
@@ -30,6 +32,7 @@ signals:
 public slots:
      void finishedSlot(QNetworkReply*)   ;
      void DownloadProgress(qint64 , qint64 );
+     void httpReadyRead();
 private:
      QNetworkAccessManager *dnam;
      QNetworkReply *Reply;
